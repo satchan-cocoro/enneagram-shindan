@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>あなたのトリセツ診断｜エニアグラム23問でウイングまでわかる無料診断</title>
+<meta name="description" content="23の質問に答えるだけで、あなたの性格のタイプとウイングがわかる無料エニアグラム診断。350人以上のセッション実績を持つ公認心理師さっちゃん監修。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F4EC;      /* 和紙 */
+    --ink:#35302B;        /* 墨 */
+    --shu:#C0392F;        /* 朱 */
+    --shu-dark:#9E2B23;
+    --indigo:#3C4B6E;     /* 藍 */
+    --indigo-light:#E8EBF2;
+    --line:#D9D2C3;       /* 薄い罫線 */
+    --soft:#EFEAE0;
+    --white:#FFFDF8;
+    --radius:14px;
+    --font-display:'Shippori Mincho', serif;
+    --font-body:'Zen Kaku Gothic New', sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--font-body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.85;
+    font-size:16px;
+    /* 和紙の質感（ごく薄いノイズ風） */
+    background-image:radial-gradient(rgba(60,75,110,0.035) 1px, transparent 1px);
+    background-size:22px 22px;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:24px 20px 64px}
+
+  /* ===== 共通パーツ ===== */
+  .eyebrow{
+    font-size:12px;letter-spacing:0.25em;color:var(--indigo);
+    text-align:center;margin-bottom:10px;font-weight:500;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-size:clamp(26px,7vw,34px);
+    text-align:center;line-height:1.5;letter-spacing:0.04em;
+    font-weight:600;
+  }
+  .accent{color:var(--shu)}
+  .btn{
+    display:block;width:100%;
+    background:var(--shu);color:var(--white);
+    border:none;border-radius:999px;
+    font-family:var(--font-body);font-weight:700;font-size:17px;
+    padding:16px 24px;cursor:pointer;letter-spacing:0.08em;
+    transition:transform .15s ease, background .15s ease;
+    box-shadow:0 4px 14px rgba(192,57,47,0.25);
+  }
+  .btn:hover{background:var(--shu-dark);transform:translateY(-1px)}
+  .btn:focus-visible{outline:3px solid var(--indigo);outline-offset:3px}
+  .btn.ghost{
+    background:transparent;color:var(--indigo);
+    box-shadow:none;border:1.5px solid var(--indigo);
+    font-weight:500;
+  }
+  .btn.ghost:hover{background:var(--indigo-light)}
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 24px;
+    box-shadow:0 2px 10px rgba(53,48,43,0.05);
+  }
+  .screen{display:none;animation:fadein .4s ease}
+  .screen.active{display:block}
+  @keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+
+  /* ===== イントロ ===== */
+  .intro-seal{
+    width:88px;height:88px;margin:0 auto 18px;
+    border:3px solid var(--shu);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--shu);font-family:var(--font-display);
+    font-size:30px;font-weight:700;letter-spacing:0.05em;
+    transform:rotate(-6deg);
+    line-height:1.3;text-align:center;
+  }
+  .intro-lead{
+    text-align:center;margin:20px 0 8px;font-size:15.5px;
+  }
+  .intro-points{
+    margin:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:16px 4px;
+  }
+  .intro-points p{
+    font-size:14.5px;padding:6px 0;display:flex;gap:10px;align-items:baseline;
+  }
+  .intro-points .mark{color:var(--shu);font-weight:700;flex-shrink:0}
+  .intro-note{
+    font-size:13px;color:#6E675E;text-align:center;margin:14px 0 22px;
+  }
+
+  /* ===== 進捗 ===== */
+  .progress{margin:8px 0 20px}
+  .progress-label{
+    display:flex;justify-content:space-between;
+    font-size:12.5px;color:var(--indigo);letter-spacing:0.1em;margin-bottom:6px;
+    font-weight:500;
+  }
+  .progress-bar{
+    height:6px;background:var(--soft);border-radius:99px;overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;background:linear-gradient(90deg,var(--indigo),var(--shu));
+    width:0%;transition:width .35s ease;border-radius:99px;
+  }
+
+  /* ===== 質問 ===== */
+  .q-stage{
+    font-size:12px;letter-spacing:0.2em;color:var(--indigo);
+    text-align:center;margin-bottom:12px;font-weight:500;
+  }
+  .q-text{
+    font-family:var(--font-display);
+    font-size:19px;font-weight:600;line-height:1.75;
+    text-align:center;margin-bottom:24px;letter-spacing:0.02em;
+  }
+  .opt{
+    display:block;width:100%;text-align:left;
+    background:var(--white);border:1.5px solid var(--line);
+    border-radius:12px;padding:15px 18px;margin-bottom:12px;
+    font-family:var(--font-body);font-size:15.5px;line-height:1.7;
+    cursor:pointer;color:var(--ink);
+    transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .opt:hover{border-color:var(--indigo);background:var(--indigo-light)}
+  .opt:focus-visible{outline:3px solid var(--indigo);outline-offset:2px}
+  .opt:active{transform:scale(0.99)}
+  .opt .opt-head{
+    font-weight:700;color:var(--indigo);font-size:13px;letter-spacing:0.1em;
+    display:block;margin-bottom:2px;
+  }
+  .back-link{
+    display:inline-block;margin-top:6px;background:none;border:none;
+    color:#8A8276;font-size:13.5px;cursor:pointer;font-family:var(--font-body);
+    text-decoration:underline;text-underline-offset:3px;
+  }
+  .back-link:hover{color:var(--indigo)}
+
+  /* ===== 判定中 ===== */
+  .loading-box{text-align:center;padding:70px 0}
+  .loading-seal{
+    width:96px;height:96px;margin:0 auto 24px;
+    border:3px solid var(--shu);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--shu);font-family:var(--font-display);font-size:34px;font-weight:700;
+    animation:pulse 1.4s ease-in-out infinite;transform:rotate(-6deg);
+  }
+  @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+  .loading-text{font-family:var(--font-display);font-size:17px;letter-spacing:0.06em}
+  .loading-sub{font-size:13px;color:#6E675E;margin-top:8px}
+
+  /* ===== 結果：鑑定書カード ===== */
+  .result-card{
+    background:var(--white);
+    border:2px solid var(--ink);
+    border-radius:6px;
+    padding:34px 26px 30px;
+    position:relative;
+    box-shadow:0 6px 22px rgba(53,48,43,0.10);
+  }
+  .result-card::before{
+    content:"";position:absolute;inset:7px;
+    border:1px solid var(--line);border-radius:3px;pointer-events:none;
+  }
+  .result-title{
+    font-family:var(--font-display);
+    text-align:center;font-size:14px;letter-spacing:0.4em;
+    color:var(--indigo);margin-bottom:20px;font-weight:600;
+  }
+  .seal{
+    width:110px;height:110px;margin:0 auto 6px;
+    background:var(--shu);border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:var(--white);transform:rotate(-5deg);
+    box-shadow:0 4px 12px rgba(192,57,47,0.35);
+  }
+  .seal .seal-kanji{
+    font-family:var(--font-display);font-size:44px;font-weight:700;line-height:1;
+  }
+  .seal .seal-wing{
+    font-size:13px;font-weight:700;letter-spacing:0.05em;margin-top:4px;
+  }
+  .type-code{
+    text-align:center;font-size:14px;letter-spacing:0.2em;
+    color:var(--shu);font-weight:700;margin-top:14px;
+  }
+  .type-name{
+    font-family:var(--font-display);
+    text-align:center;font-size:26px;font-weight:700;
+    letter-spacing:0.05em;margin:4px 0 6px;line-height:1.5;
+  }
+  .type-catch{
+    text-align:center;font-size:14.5px;color:var(--indigo);margin-bottom:4px;
+  }
+  .wing-text{
+    font-size:14.5px;background:var(--indigo-light);
+    border-radius:10px;padding:14px 16px;margin:18px 0 4px;line-height:1.8;
+  }
+  .wing-text b{color:var(--indigo)}
+
+  .sec{margin-top:26px}
+  .sec-title{
+    font-family:var(--font-display);
+    font-size:16.5px;font-weight:700;letter-spacing:0.06em;
+    display:flex;align-items:center;gap:10px;margin-bottom:12px;
+  }
+  .sec-title::before{
+    content:"";width:5px;height:20px;background:var(--shu);border-radius:2px;flex-shrink:0;
+  }
+  .zubari{list-style:none}
+  .zubari li{
+    position:relative;padding:10px 0 10px 28px;
+    border-bottom:1px dashed var(--line);
+    font-size:15px;line-height:1.8;
+  }
+  .zubari li:last-child{border-bottom:none}
+  .zubari li::before{
+    content:"✓";position:absolute;left:2px;top:10px;
+    color:var(--shu);font-weight:700;
+  }
+  .sec p{font-size:15px}
+  .hint-box{
+    background:var(--soft);border-radius:10px;padding:16px 18px;
+    font-size:15px;line-height:1.9;
+  }
+  .hint-box .hint-label{
+    font-weight:700;color:var(--shu);font-size:13px;letter-spacing:0.15em;
+    display:block;margin-bottom:4px;
+  }
+
+  /* センター内スコア */
+  .score-area{margin-top:8px}
+  .score-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .score-name{width:9.5em;font-size:13px;flex-shrink:0;line-height:1.4}
+  .score-track{flex:1;height:10px;background:var(--soft);border-radius:99px;overflow:hidden}
+  .score-fill{height:100%;background:var(--indigo);border-radius:99px;width:0%;transition:width .8s ease}
+  .score-row.top .score-fill{background:var(--shu)}
+  .score-row.top .score-name{font-weight:700}
+  .score-note{font-size:12.5px;color:#6E675E;margin-top:6px}
+
+  /* 締め */
+  .closing{
+    margin-top:30px;padding-top:24px;border-top:1px solid var(--line);
+    text-align:center;
+  }
+  .closing p{font-size:15px;margin-bottom:10px}
+  .closing .brand-line{
+    font-family:var(--font-display);font-size:18px;font-weight:700;
+    letter-spacing:0.1em;color:var(--indigo);margin:14px 0;
+  }
+
+  /* CTA */
+  .cta{margin-top:26px;text-align:center}
+  .cta p{font-size:14.5px;margin-bottom:14px}
+  .cta .btn{margin-bottom:12px}
+  .share-note{font-size:13px;color:#6E675E;margin-top:16px}
+  .footer{
+    text-align:center;font-size:12px;color:#8A8276;margin-top:40px;line-height:2;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ イントロ画面 ============ -->
+  <section class="screen active" id="screen-intro">
+    <div class="intro-seal">性格<br>診断</div>
+    <p class="eyebrow">公認心理師さっちゃん監修・無料</p>
+    <h1>あなたの<span class="accent">トリセツ</span>診断</h1>
+    <p class="intro-lead">
+      23の質問に答えるだけで、<br>
+      あなたの性格の「設計図」がわかります。
+    </p>
+    <div class="card" style="margin-top:22px">
+      <div class="intro-points">
+        <p><span class="mark">一、</span>エニアグラム（人の性格を9つのタイプで読み解く心理学）がベースです</p>
+        <p><span class="mark">二、</span>9タイプだけでなく「ウイング」（隣のタイプの影響）までわかります</p>
+        <p><span class="mark">三、</span>350人以上のセッション実績をもつ公認心理師が作りました</p>
+      </div>
+      <p class="intro-note">
+        所要時間は約3〜4分。<br>
+        「こうありたい自分」ではなく、<br>
+        <b>「普段の自分」</b>で、直感的に答えてくださいね。
+      </p>
+      <button class="btn" onclick="startQuiz()">診断をはじめる</button>
+    </div>
+  </section>
+
+  <!-- ============ 質問画面 ============ -->
+  <section class="screen" id="screen-quiz">
+    <div class="progress">
+      <div class="progress-label">
+        <span id="progress-count">Q1 / 20</span>
+        <span id="progress-stage-label">第一章</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+    <div class="card">
+      <p class="q-stage" id="q-stage"></p>
+      <p class="q-text" id="q-text"></p>
+      <div id="q-options"></div>
+      <button class="back-link" id="back-btn" onclick="goBack()">← ひとつ前に戻る</button>
+    </div>
+  </section>
+
+  <!-- ============ 判定中画面 ============ -->
+  <section class="screen" id="screen-loading">
+    <div class="loading-box">
+      <div class="loading-seal">綴</div>
+      <p class="loading-text">あなたのトリセツを綴じています…</p>
+      <p class="loading-sub">23の答えから、そっくりさんタイプとの見きわめまで行っています</p>
+    </div>
+  </section>
+
+  <!-- ============ 結果画面 ============ -->
+  <section class="screen" id="screen-result">
+    <p class="eyebrow">診断結果</p>
+    <div class="result-card">
+      <p class="result-title">あなたのトリセツ</p>
+      <div class="seal">
+        <span class="seal-kanji" id="seal-kanji">七</span>
+        <span class="seal-wing" id="seal-wing">w6</span>
+      </div>
+      <p class="type-code" id="type-code">タイプ7 ウイング6</p>
+      <p class="type-name" id="type-name"></p>
+      <p class="type-catch" id="type-catch"></p>
+      <div class="wing-text" id="wing-text"></div>
+
+      <div class="sec">
+        <p class="sec-title">実は、こんなところありませんか？</p>
+        <ul class="zubari" id="zubari-list"></ul>
+      </div>
+
+      <div class="sec">
+        <p class="sec-title">あなたの素敵なところ</p>
+        <p id="suteki-text"></p>
+      </div>
+
+      <div class="sec">
+        <p class="sec-title">しんどくなりやすいとき</p>
+        <p id="shindoi-text"></p>
+      </div>
+
+      <div class="sec">
+        <div class="hint-box">
+          <span class="hint-label">明日からのちいさな一歩</span>
+          <span id="hint-text"></span>
+        </div>
+      </div>
+
+      <div class="sec" id="score-sec">
+        <p class="sec-title">あなたの中のバランス</p>
+        <div class="score-area" id="score-area"></div>
+        <p class="score-note">※同じグループの3タイプの中での、あなたの傾向の強さです。</p>
+      </div>
+
+      <div class="sec" id="switch-sec" style="display:none">
+        <p class="sec-title">あなたが併せ持つ、もうひとつの顔</p>
+        <p id="switch-text"></p>
+      </div>
+
+      <div class="closing">
+        <p>
+          診断結果を読んで、「直したいところ」が目についたかもしれません。<br>
+          でも、その性格は<b>あなたが今日まで頑張って生きてきた証</b>です。
+        </p>
+        <p>
+          嫌いなところも、大切なあなたの一部。<br>
+          まるごと知って、まるごと大切にしていきましょう。
+        </p>
+        <p class="brand-line">― 自分の軸をもつ ―</p>
+        <p style="font-size:14px">無理しすぎず、いきましょう。</p>
+      </div>
+    </div>
+
+    <!-- ▼▼▼ CTAセクション：リンクはご自身のものに書き換えてください ▼▼▼ -->
+    <div class="cta">
+      <p>
+        「もっと深く知りたい」と思ったら。<br>
+        タイプ別のくわしい解説や、日々の発信はこちらから。
+      </p>
+      <a href="https://lin.ee/yxYXouv" target="_blank" rel="noopener" style="text-decoration:none">
+        <button class="btn">LINEでタイプ別解説を受け取る</button>
+      </a>
+      <a href="https://www.instagram.com/satchan_cocoro?igsh=MXg2NzN1cGQya2k4NQ%3D%3D&utm_source=qr" target="_blank" rel="noopener" style="text-decoration:none">
+        <button class="btn ghost">Instagramをフォローする</button>
+      </a>
+      <button class="btn ghost" style="margin-top:12px" onclick="copyShareText()" id="share-btn">結果をコピーしてシェアする</button>
+      <p class="share-note">スクショしてストーリーズでシェアも大歓迎です📷</p>
+      <button class="back-link" style="margin-top:20px" onclick="retake()">もう一度診断する</button>
+    </div>
+    <!-- ▲▲▲ CTAセクションここまで ▲▲▲ -->
+
+    <p class="footer">
+      本診断はエニアグラム理論をもとにした簡易診断であり、医学的な診断ではありません。<br>
+      © さっちゃん｜公認心理師
+    </p>
+  </section>
+
+</div>
+
+<script>
+/* ==================================================
+   データ定義
+================================================== */
+
+// --- 第1段階：センター判定（6問・3択） g=本能(体) h=感情(心) t=思考(頭)
+const stage1 = [
+  {
+    q:"大事な決断を迫られたとき、まず…",
+    opts:[
+      {t:"考えるより先に、直感で体が動いている", c:"g"},
+      {t:"周りの人がどう思うか、関係がどうなるかが気になる", c:"h"},
+      {t:"頭の中で、選択肢やプランが次々に浮かぶ", c:"t"}
+    ]
+  },
+  {
+    q:"イラッとしたとき、私は…",
+    opts:[
+      {t:"態度や行動に、つい出てしまう", c:"g"},
+      {t:"「嫌われたかな」と、相手との関係のほうが気になる", c:"h"},
+      {t:"いったん距離を置いて、頭の中で整理したくなる", c:"t"}
+    ]
+  },
+  {
+    q:"初対面の人が多い場では…",
+    opts:[
+      {t:"場の空気を、自分のペースに持っていきたい", c:"g"},
+      {t:"自分が相手にどう見られているかが気になる", c:"h"},
+      {t:"まず様子を観察して、安全かどうか確かめたい", c:"t"}
+    ]
+  },
+  {
+    q:"どっと疲れる一番の原因は…",
+    opts:[
+      {t:"物事が思い通りに進まないこと", c:"g"},
+      {t:"人からの評価や、気持ちのすれ違い", c:"h"},
+      {t:"考えごとや頭の忙しさが、止まらないこと", c:"t"}
+    ]
+  },
+  {
+    q:"自分の中で強いと感じるのは…",
+    opts:[
+      {t:"「こうあるべき」「これは譲れない」という感覚", c:"g"},
+      {t:"「わかってほしい」「認めてほしい」という気持ち", c:"h"},
+      {t:"「ちゃんと理解したい」「先の選択肢を考えておきたい」という気持ち", c:"t"}
+    ]
+  },
+  {
+    q:"「いい休日だった」と思えるのは…",
+    opts:[
+      {t:"体を動かした、やりたいことをやり切った日", c:"g"},
+      {t:"大切な人と、いい時間を過ごせた日", c:"h"},
+      {t:"興味のあることを調べたり、次の楽しい計画を立てたりできた日", c:"t"}
+    ]
+  }
+];
+
+// --- 第2段階：タイプ判定（センター別9問・4段階）
+const stage2 = {
+  g:[ // 本能：8,9,1
+    {q:"遠回しな言い方より、はっきり言ってほしいし、自分もはっきり言うほうだ", type:8},
+    {q:"理不尽なことには、黙っていられない", type:8},
+    {q:"弱音を吐くのは苦手。つい「大丈夫」と言ってしまう", type:8},
+    {q:"揉めるくらいなら、自分が我慢したほうがラクだと感じる", type:9},
+    {q:"「どっちでもいいよ」が口ぐせになっている", type:9},
+    {q:"一人でぼーっとする時間がないと、充電できない", type:9},
+    {q:"「〜すべき」「ちゃんと」という言葉を、よく使う", type:1},
+    {q:"人のミスや、ルールを守らない人が、どうしても気になる", type:1},
+    {q:"完璧にできなかった自分を、夜になって責めてしまうことがある", type:1}
+  ],
+  h:[ // 感情：2,3,4
+    {q:"頼まれると断れない。困っている人を放っておけない", type:2},
+    {q:"「ありがとう」と言われると、疲れが吹き飛ぶ", type:2},
+    {q:"人を助けるのは得意なのに、自分がお願いごとをするのは苦手", type:2},
+    {q:"「すごいね」と言われるためなら、頑張れる", type:3},
+    {q:"効率よく結果を出すのが得意で、無駄なことが嫌い", type:3},
+    {q:"立ち止まると不安になる。予定が埋まっていると安心する", type:3},
+    {q:"「普通だね」と言われても、褒め言葉に聞こえない", type:4},
+    {q:"感情の波が大きく、気分に左右されやすい", type:4},
+    {q:"「誰にもわかってもらえない」と感じることがある", type:4}
+  ],
+  t:[ // 思考：5,6,7
+    {q:"急に話を振られるのが苦手。頭の中で考えてから話したい", type:5},
+    {q:"一人の時間とエネルギーを、人に奪われたくない", type:5},
+    {q:"よく知らないことに、軽々しく口を出したくない", type:5},
+    {q:"最悪のケースを想定して、備えておかないと不安", type:6},
+    {q:"「本当に大丈夫？」と、何度も確認してしまう", type:6},
+    {q:"信頼できる人や決まったやり方があると、安心する", type:6},
+    {q:"楽しい予定を考えているときが、一番幸せ", type:7},
+    {q:"つらいことがあっても「まあ、なんとかなる」と切り替えが早い", type:7},
+    {q:"一つのことをじっくり続けるより、新しいことに目移りしがち", type:7}
+  ]
+};
+
+const scaleOpts = [
+  {label:"とてもあてはまる", score:3},
+  {label:"ややあてはまる", score:2},
+  {label:"あまりあてはまらない", score:1},
+  {label:"あてはまらない", score:0}
+];
+
+// --- 第3段階：ウイング判定（タイプ別5問・A/B）
+const wingQs = {
+  1:[
+    {a:{t:"コツコツ淡々と、静かに正しさを守りたい", w:9}, b:{t:"人の役に立つ形で、正しさを広げたい", w:2}},
+    {a:{t:"感情的になるのは避けたい。冷静でいたい", w:9}, b:{t:"人のためなら、つい世話を焼いてしまう", w:2}},
+    {a:{t:"一人で黙々と作業するのが好き", w:9}, b:{t:"人と関わりながら、物事を良くしていくのが好き", w:2}},
+    {a:{t:"怒りは、抑えて飲み込むタイプ", w:9}, b:{t:"正しくないことには、はっきり指摘するタイプ", w:2}},
+    {a:{t:"平和のためなら、自分の主張は引っ込められる", w:9}, b:{t:"間違いを見過ごすのは、本当の優しさじゃないと思う", w:2}}
+  ],
+  2:[
+    {a:{t:"「正しいやり方」で、丁寧に人を支えたい", w:1}, b:{t:"「喜ばれる結果」を出して、認められたい", w:3}},
+    {a:{t:"控えめに、裏方として支えるのが好き", w:1}, b:{t:"人前に立って引っ張るのも、嫌いじゃない", w:3}},
+    {a:{t:"ルールやマナーは、きちんと守りたい", w:1}, b:{t:"目的のためなら、やり方は柔軟でいい", w:3}},
+    {a:{t:"「真面目で几帳面」と言われる", w:1}, b:{t:"「社交的で明るい」と言われる", w:3}},
+    {a:{t:"感謝より「きちんと役に立てたか」が気になる", w:1}, b:{t:"感謝も評価も、正直どちらもほしい", w:3}}
+  ],
+  3:[
+    {a:{t:"人に喜ばれること、チームの成功がモチベーション", w:2}, b:{t:"自分らしさやセンスを、認められたい", w:4}},
+    {a:{t:"誰とでも、わりとすぐ仲良くなれる", w:2}, b:{t:"本当の自分を見せる相手は、選ぶ", w:4}},
+    {a:{t:"「明るくてエネルギッシュ」と言われる", w:2}, b:{t:"「どこかミステリアス」と言われる", w:4}},
+    {a:{t:"みんなの期待に、応えたい", w:2}, b:{t:"「みんなと同じ成功」では、満足できない", w:4}},
+    {a:{t:"家族や仲間の笑顔が、一番のご褒美", w:2}, b:{t:"唯一無二の存在に、なりたい", w:4}}
+  ],
+  4:[
+    {a:{t:"自分の世界観を、作品や発信で表現したい", w:3}, b:{t:"自分の内面を、一人で静かに深めたい", w:5}},
+    {a:{t:"誰にも見てもらえないと、寂しい", w:3}, b:{t:"見られるより、そっとしておいてほしい", w:5}},
+    {a:{t:"おしゃれや見た目に、こだわりがある", w:3}, b:{t:"知識や考えごとに、こだわりがある", w:5}},
+    {a:{t:"感情は、わりと表に出すほう", w:3}, b:{t:"感情は、内に秘めるほう", w:5}},
+    {a:{t:"SNSでの反応は、正直かなり気になる", w:3}, b:{t:"SNSより、日記やノートに書くほうが好き", w:5}}
+  ],
+  5:[
+    {a:{t:"独自の視点、ユニークさを大事にしたい", w:4}, b:{t:"正確さ、確実さを大事にしたい", w:6}},
+    {a:{t:"芸術や哲学など、答えのない世界が好き", w:4}, b:{t:"データや仕組みなど、根拠のある世界が好き", w:6}},
+    {a:{t:"基本、一匹狼でいたい", w:4}, b:{t:"信頼できる少数の仲間は、いてほしい", w:6}},
+    {a:{t:"「感受性が強い」と言われる", w:4}, b:{t:"「慎重で堅実」と言われる", w:6}},
+    {a:{t:"直感やひらめきを、信じる", w:4}, b:{t:"検証と根拠を、信じる", w:6}}
+  ],
+  6:[
+    {a:{t:"じっくり調べて、確信を持ってから動きたい", w:5}, b:{t:"不安があっても、動きながら考えたい", w:7}},
+    {a:{t:"静かで落ち着いた環境が好き", w:5}, b:{t:"にぎやかで楽しい場も、けっこう好き", w:7}},
+    {a:{t:"「真面目で慎重」と言われる", w:5}, b:{t:"「明るくてノリがいい」と言われる", w:7}},
+    {a:{t:"一人の時間で、心を整える", w:5}, b:{t:"人と話して、不安を軽くする", w:7}},
+    {a:{t:"大人数の集まりは、正直疲れる", w:5}, b:{t:"気の合う仲間との集まりは、大好き", w:7}}
+  ],
+  7:[
+    {a:{t:"仲間と一緒に、ワイワイ楽しみたい", w:6}, b:{t:"自分のペースで、自由に楽しみたい", w:8}},
+    {a:{t:"実は、心配性な一面がある", w:6}, b:{t:"細かいことは、あまり気にしない", w:8}},
+    {a:{t:"「愛嬌がある」と言われる", w:6}, b:{t:"「パワフル」と言われる", w:8}},
+    {a:{t:"みんなに好かれたい気持ちが、強い", w:6}, b:{t:"多少嫌われても、やりたいことを貫きたい", w:8}},
+    {a:{t:"「みんなで」が、楽しさの条件", w:6}, b:{t:"「自由に」が、楽しさの条件", w:8}}
+  ],
+  8:[
+    {a:{t:"新しい挑戦、刺激的なことが大好き", w:7}, b:{t:"守るべきもののために、どっしり構えたい", w:9}},
+    {a:{t:"エネルギッシュで、行動が早い", w:7}, b:{t:"普段は穏やか。いざという時に強い", w:9}},
+    {a:{t:"目立つポジションも、楽しめる", w:7}, b:{t:"表に出るより、実質的に仕切りたい", w:9}},
+    {a:{t:"怒りはすぐ表に出て、すぐ消える", w:7}, b:{t:"怒りは静かに、でも深く残る", w:9}},
+    {a:{t:"退屈が、一番の敵", w:7}, b:{t:"心の平和も、実は大事にしている", w:9}}
+  ],
+  9:[
+    {a:{t:"いざという時は、意外と頑固で押しが強い", w:8}, b:{t:"きちんとした手順や決まりごとに、安心する", w:1}},
+    {a:{t:"「自然体でマイペース」と言われる", w:8}, b:{t:"「真面目でしっかり者」と言われる", w:1}},
+    {a:{t:"細かいことは、あまり気にしない", w:8}, b:{t:"やるべきことを後回しにすると、罪悪感がある", w:1}},
+    {a:{t:"譲れない一線を越えられたら、戦う", w:8}, b:{t:"争うより、正しい形に整えたい", w:1}},
+    {a:{t:"のんびりして見えて、粘り強さには自信がある", w:8}, b:{t:"「ちゃんとしなきゃ」と思う場面が、意外と多い", w:1}}
+  ]
+};
+
+// --- 第3段階：見きわめ（間違えやすいタイプ同士のクロスチェック・3問）
+// 仮タイプに対して、混同しやすい「そっくりさんタイプ」との比較質問を出す
+const lookAlike = {1:6, 2:9, 3:7, 4:9, 5:9, 6:1, 7:8, 8:7, 9:2};
+const crossQs = {
+  "7-8":[
+    {a:{t:"一番避けたいのは、退屈と、つらい気持ちにどっぷり浸ること", type:7},
+     b:{t:"一番避けたいのは、人に支配されることと、弱く見られること", type:8}},
+    {a:{t:"重い空気は苦手。笑いや話題転換で、明るく切り替えたい", type:7},
+     b:{t:"対立は怖くない。必要なら、真っ向からぶつかる", type:8}},
+    {a:{t:"頭の中は「次の楽しみ・新しいプラン」でいつも忙しい", type:7},
+     b:{t:"頭より体。「今、目の前のこと」に全力で向かっている", type:8}}
+  ],
+  "1-6":[
+    {a:{t:"ルールを守るのは、「自分の中の正しさ」に従いたいから", type:1},
+     b:{t:"ルールを守るのは、「安心・安全」でいたいから", type:6}},
+    {a:{t:"湧いてくるのは「こうあるべきなのに」という怒りやモヤモヤ", type:1},
+     b:{t:"湧いてくるのは「大丈夫かな」という不安や心配", type:6}},
+    {a:{t:"正しさの基準は自分の内側にある。人の意見では変わらない", type:1},
+     b:{t:"信頼できる人や情報に確かめてから、判断したい", type:6}}
+  ],
+  "2-9":[
+    {a:{t:"人のために「自分から積極的に動いて」尽くすほう", type:2},
+     b:{t:"人に「合わせて」波風を立てないようにするほう", type:9}},
+    {a:{t:"大切な人の輪の中心近くにいて、必要とされたい", type:2},
+     b:{t:"輪の中に、静かに溶け込んでいられればいい", type:9}},
+    {a:{t:"感謝されないと、正直けっこう傷つく", type:2},
+     b:{t:"感謝は嬉しいけれど、それより平穏でいることが大事", type:9}}
+  ],
+  "3-7":[
+    {a:{t:"頑張る理由は「認められたい・結果を出したい」から", type:3},
+     b:{t:"頑張る理由は「面白そう・ワクワクする」から", type:7}},
+    {a:{t:"途中で飽きても、成果が出るまではやり切る", type:3},
+     b:{t:"飽きたら、次の面白いことに移りたくなる", type:7}},
+    {a:{t:"人からどう見えるか、イメージを意識して動く", type:3},
+     b:{t:"人の目より、自分が楽しいかどうかが優先", type:7}}
+  ],
+  "4-9":[
+    {a:{t:"感情の波は大きく、喜びも悲しみもはっきり感じる", type:4},
+     b:{t:"感情の起伏は少なく、いつも凪いでいるほう", type:9}},
+    {a:{t:"「人と違う自分」でいたい", type:4},
+     b:{t:"「みんなと同じ」が心地いい", type:9}},
+    {a:{t:"満たされない気持ちや憧れが、いつも心のどこかにある", type:4},
+     b:{t:"「今のままで、まあいいかな」と思える", type:9}}
+  ],
+  "5-9":[
+    {a:{t:"一人の時間は、考えごとや探究に使いたい", type:5},
+     b:{t:"一人の時間は、ぼーっと休むことに使いたい", type:9}},
+    {a:{t:"知らない分野のことは、とことん調べたくなる", type:5},
+     b:{t:"詳しく知らなくても、あまり気にならない", type:9}},
+    {a:{t:"自分の時間や空間は、はっきり線を引いて守りたい", type:5},
+     b:{t:"頼まれると、自分の予定を後回しにしがち", type:9}}
+  ]
+};
+function crossKey(t1,t2){ return Math.min(t1,t2)+"-"+Math.max(t1,t2); }
+
+// --- 結果テキスト（タイプ別）
+const results = {
+  1:{
+    name:"正しさを大切にする人",
+    catch:"「ちゃんとしなきゃ」が口ぐせの、努力の人",
+    zubari:[
+      "頑張っているのに「まだ足りない」と、自分を責めてしまう夜がある",
+      "人の「まあいっか」が気になるのに、注意すべきか飲み込むべきか、毎回悩んでいる",
+      "本当は、誰よりも「ちゃんとしてるね」って認めてほしい"
+    ],
+    suteki:"約束を守る誠実さ。手を抜かない丁寧さ。あなたがいるから、周りは安心して物事を任せられます。「当たり前のことを当たり前にやる」って、実は誰にでもできることじゃないんです。",
+    shindoi:"「〜すべき」が増えすぎて、自分にも人にも厳しくなってしまうとき。理想の自分と今の自分の差ばかりが見えて、できていることが見えなくなります。",
+    hint:"一日の終わりに「今日できなかったこと」ではなく、「今日ちゃんとやれたこと」を1つだけ書いてみてください。あなたは、思っているよりずっと、ちゃんとやれています。"
+  },
+  2:{
+    name:"誰かの力になりたい人",
+    catch:"「ありがとう」がガソリンになる、愛の人",
+    zubari:[
+      "「大丈夫？」と人に聞くのは得意なのに、自分から「助けて」と言うのは苦手",
+      "頼まれてもいないのに先回りして動いて、あとでどっと疲れることがある",
+      "感謝されないと「私、何やってるんだろう」と、ふと虚しくなる瞬間がある"
+    ],
+    suteki:"人の変化に気づく細やかさ。見返りを求める前に体が動く優しさ。あなたに助けられて、救われた人が必ずいます。その温かさは、あなたの一番の才能です。",
+    shindoi:"自分のことが後回しになりすぎたとき。「私がやらなきゃ」で動き続けて、気づいたら心のタンクが空っぽに。人のためのエネルギーは、自分が満たされてこそ湧いてきます。",
+    hint:"1日1回、ちいさなお願いをしてみてください。「そのペン取って」くらいでOKです。頼ることは、迷惑をかけることではなく、相手を信頼しているというメッセージです。"
+  },
+  3:{
+    name:"前に進み続ける人",
+    catch:"立ち止まるのがちょっと怖い、努力と結果の人",
+    zubari:[
+      "予定のない休日が、実はちょっと不安",
+      "「すごいね」と言われるのは嬉しいのに、心のどこかで「本当の私は…」と思っている",
+      "弱音を吐ける場所がない。「できる人」でいなきゃと、つい思ってしまう"
+    ],
+    suteki:"目標に向かって走り抜く力。周りを巻き込む前向きなエネルギー。あなたの頑張る姿に、勇気をもらっている人がたくさんいます。",
+    shindoi:"「何かを達成している自分」でいないと、価値がない気がしてしまうとき。休むことに罪悪感を覚えて、心と体のサインを見逃しがちです。",
+    hint:"予定のない30分を、あえてつくってみてください。何も生み出さない時間を過ごしても、あなたの価値は1ミリも減りません。何もしていないあなたにも、ちゃんと価値があります。"
+  },
+  4:{
+    name:"自分らしさを探す人",
+    catch:"「普通」じゃ物足りない、感性の人",
+    zubari:[
+      "「みんなと同じ」が、褒め言葉に聞こえない",
+      "気分が乗らない日は、何をしても心がついてこない",
+      "「どうせ誰にもわからない」と思いながら、本当は誰より、わかってほしい"
+    ],
+    suteki:"人が見過ごす美しさや痛みに気づける、深い感受性。あなたの言葉や表現は、同じ痛みを抱える誰かの「わかってくれる人がいた」になります。",
+    shindoi:"人と比べて「自分には何かが欠けている」と感じるとき。感情の波に飲まれて、自分でも自分を持て余してしまうことがあります。",
+    hint:"気分が落ちた日は、「感じやすい私は、気づける私」と一言つぶやいてみてください。感情の波は、あなたの欠点ではなく、感性というアンテナの感度の高さです。"
+  },
+  5:{
+    name:"深く知りたい人",
+    catch:"頭の中に広い世界を持つ、静かな探究者",
+    zubari:[
+      "急に話を振られると、頭が真っ白になる。準備してから話したい",
+      "「もっと自分を出しなよ」と言われるたび、そっとしておいてほしいと思う",
+      "人と過ごすのは嫌いじゃないのに、帰り道でどっと疲れている"
+    ],
+    suteki:"物事の本質まで潜っていける集中力と、確かな知識。あなたが「わかる」と言うとき、そこには積み重ねた裏付けがあります。その静かな確かさが、あなたの信頼です。",
+    shindoi:"エネルギーや時間を「奪われる」感覚が続くとき。準備が整うまで動けず、頭の中だけで完結して、行動のタイミングを逃してしまうことがあります。",
+    hint:"完璧に調べ終わる前に、6割の段階で一度アウトプットしてみてください。あなたの6割は、多くの人の10割です。出してから深める、でちゃんと間に合います。"
+  },
+  6:{
+    name:"安心を求める人",
+    catch:"「大丈夫かな？」の裏に、誠実さが隠れている人",
+    zubari:[
+      "決めた後も「本当にこれでよかったのかな」と、何度も考えてしまう",
+      "返信が遅いだけで「怒らせたかな」と、不安になることがある",
+      "石橋を叩きすぎて、渡るタイミングを逃したことがある"
+    ],
+    suteki:"リスクに先に気づける観察力と、仲間を裏切らない誠実さ。あなたの「心配」は、大切なものを守ろうとする責任感の裏返しです。あなたがいるチームは、事故が少ないんです。",
+    shindoi:"頭の中で「最悪のシナリオ」が再生され続けるとき。不安が不安を呼んで、まだ起きていないことに疲れ切ってしまいます。",
+    hint:"不安が浮かんだら、紙に書いて「事実」と「想像」に分けてみてください。書き出してみると、不安の8割は「まだ起きていない想像」だと気づけます。"
+  },
+  7:{
+    name:"楽しさを見つける人",
+    catch:"楽しいことセンサーの感度が高い、太陽みたいな人",
+    zubari:[
+      "「あとで考えよう」の引き出しに、実は不安や悲しみがぎゅうぎゅうに詰まっている",
+      "楽しそうに見られるけど、じっとしていると急に寂しくなる夜がある",
+      "始めるのは得意。でも、終わらせるのはちょっと苦手"
+    ],
+    suteki:"どんな状況でも「楽しみ」を見つけ出す天才的な発想力。あなたが場にいるだけで、空気が明るくなります。その元気は、周りの人への立派な贈り物です。",
+    shindoi:"ネガティブな感情から逃げるために、予定を詰め込みすぎてしまうとき。楽しさで蓋をした感情は、消えずに引き出しの中で待っています。",
+    hint:"楽しい予定に飛びつく前に、5分だけ「今の気持ち」を感じてみてください。寂しさや不安を少し感じてあげるだけで、蓋をする力が抜けて、楽しさがもっと本物になります。"
+  },
+  8:{
+    name:"まっすぐ突き進む人",
+    catch:"大切なものを全力で守る、頼れるリーダー",
+    zubari:[
+      "「強そう」「怖そう」と言われるけど、本当は情に厚くて、涙もろい",
+      "弱っている姿を見せるくらいなら、一人で抱え込むほうを選んでしまう",
+      "守りたい人のためなら、自分が傷つくことは平気で選べてしまう"
+    ],
+    suteki:"理不尽に立ち向かう強さと、仲間を守る器の大きさ。あなたの「はっきり言う」は、裏表のない信頼の証です。あなたに守られて、安心できている人がいます。",
+    shindoi:"「弱さを見せたら、なめられる」と鎧を脱げなくなるとき。本当は疲れているのに「大丈夫」で塗り固めて、誰にも頼れなくなってしまいます。",
+    hint:"信頼できる人に、ちいさな弱音を1つだけ言ってみてください。「ちょっと疲れた」だけでいいんです。弱さを見せられる強さは、あなたの強さをもっと本物にします。"
+  },
+  9:{
+    name:"穏やかでいたい人",
+    catch:"いるだけで場が和む、癒しの人",
+    zubari:[
+      "「どこ行きたい？」に「どこでもいいよ」と答えて、本当にどこでもいい",
+      "揉めごとの空気を感じると、自分のことじゃなくても、胃のあたりが重くなる",
+      "「自分の意見がない」んじゃなくて、「言うほどのことじゃない」と飲み込んでいる"
+    ],
+    suteki:"誰も気づかないうちに、場の空気を整えている調和の力。あなたの穏やかさは「何もしていない」のではなく、対立を静かに溶かしている立派な働きです。",
+    shindoi:"周りに合わせ続けて、「私は本当はどうしたいんだっけ？」がわからなくなるとき。我慢が積もると、ある日突然、全部がどうでもよくなってしまうことも。",
+    hint:"「どっちでもいい」と言う前に、3秒だけ「本当はどっち？」と自分に聞いてみてください。ちいさな「こっちがいい」を口に出す練習が、あなたの軸を育てます。"
+  }
+};
+
+// --- ウイング別の解説文
+const wingTexts = {
+  "1-9":"あなたは<b>穏やかな理想家タイプ（1w9）</b>。怒りや不満を表に出さず、静かにコツコツと「正しいこと」を積み上げていきます。落ち着いた佇まいの奥に、強い信念を持っている人です。",
+  "1-2":"あなたは<b>人のために動く理想家タイプ（1w2）</b>。正しさを自分の中だけで終わらせず、周りの人の役に立つ形で活かそうとします。厳しさの中に、深い面倒見の良さがある人です。",
+  "2-1":"あなたは<b>きちんと支えるサポータータイプ（2w1）</b>。ルールや礼儀を大切にしながら、丁寧に人を支えます。「正しく、優しく」を両立させようとする、誠実な献身家です。",
+  "2-3":"あなたは<b>明るく場を照らすサポータータイプ（2w3）</b>。社交的で行動力があり、人を元気づけながら支えます。「喜ばれること」と「結果を出すこと」の両方を大事にする人です。",
+  "3-2":"あなたは<b>人とつながる達成者タイプ（3w2）</b>。一人で勝つより、チームや大切な人と一緒に成果を目指します。周りを乗せて引っ張る、愛される頑張り屋です。",
+  "3-4":"あなたは<b>個性で勝負する達成者タイプ（3w4）</b>。ただ結果を出すだけでは物足りず、「自分らしいやり方」にこだわります。成果とセンス、両方を追いかける人です。",
+  "4-3":"あなたは<b>表現する個性派タイプ（4w3）</b>。内面の世界を、作品や発信の形で外の世界に届けたいと願います。感性と発信力をあわせ持つ、輝く表現者です。",
+  "4-5":"あなたは<b>深く潜る個性派タイプ（4w5）</b>。自分の内面を、一人で静かに見つめて深めていきます。多くを語らない奥に、豊かな世界を持っている人です。",
+  "5-4":"あなたは<b>感性の探究者タイプ（5w4）</b>。知識だけでなく、独自の世界観や美意識を大切にします。誰も見ていない角度から物事を見られる、稀有な視点の持ち主です。",
+  "5-6":"あなたは<b>堅実な探究者タイプ（5w6）</b>。正確さと根拠を重んじ、確かな知識を積み上げます。「この人が言うなら間違いない」と頼られる、専門家気質の人です。",
+  "6-5":"あなたは<b>静かな慎重派タイプ（6w5）</b>。一人でじっくり調べて、確信を持ってから動きます。軽々しく判断しない姿勢が、深い信頼につながっている人です。",
+  "6-7":"あなたは<b>明るい慎重派タイプ（6w7）</b>。不安を抱えつつも、人と関わりながら楽しく乗り越えていきます。心配性なのに愛嬌がある、憎めない人柄です。",
+  "7-6":"あなたは<b>みんなに愛される楽しみ屋タイプ（7w6）</b>。仲間と一緒にワイワイするのが大好きで、人を巻き込んで場を明るくします。楽しさの根っこに「人とのつながり」がある人です。",
+  "7-8":"あなたは<b>突き進む楽しみ屋タイプ（7w8）</b>。自分の「楽しい」に正直で、パワフルに行動します。誰かの許可を待たずに、自分の人生を自分で面白くしていく人です。",
+  "8-7":"あなたは<b>冒険するリーダータイプ（8w7）</b>。新しい挑戦が大好きで、エネルギッシュに突き進みます。行動力とスピードで、周りをぐいぐい引っ張っていく人です。",
+  "8-9":"あなたは<b>どっしり構えるリーダータイプ（8w9）</b>。普段は穏やかで物静かなのに、いざという時に静かな強さを見せます。「守りの強さ」を持った、懐の深い人です。",
+  "9-8":"あなたは<b>芯のある癒し系タイプ（9w8）</b>。普段はのんびりマイペースなのに、譲れない一線ではしっかり主張できます。柔らかさの奥に、頑固な芯を持っている人です。",
+  "9-1":"あなたは<b>きちんとした癒し系タイプ（9w1）</b>。穏やかさの中に、真面目さと責任感をあわせ持ちます。「和ませ上手」なのに「しっかり者」という、安心感の塊のような人です。"
+};
+
+const typeKanji = {1:"一",2:"二",3:"三",4:"四",5:"五",6:"六",7:"七",8:"八",9:"九"};
+const centerNames = {g:"体で感じるグループ", h:"心で感じるグループ", t:"頭で考えるグループ"};
+
+/* ==================================================
+   状態管理
+================================================== */
+let state = null;
+
+function initState(){
+  state = {
+    phase:1,          // 1:センター 2:タイプ 3:見きわめ 4:ウイング
+    idx:0,            // 現フェーズ内の質問番号
+    centerScores:{g:0,h:0,t:0},
+    center:null,
+    typeScores:{},    // 第2段階のタイプ別スコア
+    typeMax:{},       // 「とてもあてはまる」の数（同点時用）
+    tentativeType:null, // 第2段階で決まった仮タイプ
+    crossVotes:{},    // 見きわめの得票
+    mainType:null,    // 最終確定タイプ
+    switched:false,   // 見きわめでタイプが入れ替わったか
+    wingScores:{},
+    history:[]        // 戻る用
+  };
+}
+
+const TOTAL_Q = 23;
+function totalAnswered(){
+  if(state.phase===1) return state.idx;
+  if(state.phase===2) return 6 + state.idx;
+  if(state.phase===3) return 15 + state.idx;
+  return 18 + state.idx;
+}
+
+/* ==================================================
+   画面制御
+================================================== */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0, behavior:'auto'});
+}
+
+function startQuiz(){
+  initState();
+  show('screen-quiz');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const n = totalAnswered()+1;
+  document.getElementById('progress-count').textContent = 'Q'+n+' / '+TOTAL_Q;
+  document.getElementById('progress-fill').style.width = ((n-1)/TOTAL_Q*100)+'%';
+  document.getElementById('back-btn').style.visibility = (n===1?'hidden':'visible');
+
+  const stageLabels = {1:'第一章　あなたの重心', 2:'第二章　あなたのタイプ', 3:'第三章　見きわめ', 4:'第四章　あなたの味つけ'};
+  document.getElementById('progress-stage-label').textContent = ['','第一章','第二章','第三章','第四章'][state.phase];
+  document.getElementById('q-stage').textContent = stageLabels[state.phase];
+
+  const qText = document.getElementById('q-text');
+  const optBox = document.getElementById('q-options');
+  optBox.innerHTML = '';
+
+  if(state.phase===1){
+    const q = stage1[state.idx];
+    qText.textContent = q.q;
+    q.opts.forEach(o=>{
+      const b = document.createElement('button');
+      b.className='opt';
+      b.textContent = o.t;
+      b.onclick = ()=>answerStage1(o.c);
+      optBox.appendChild(b);
+    });
+  }
+  else if(state.phase===2){
+    const q = stage2[state.center][state.idx];
+    qText.textContent = q.q;
+    scaleOpts.forEach(o=>{
+      const b = document.createElement('button');
+      b.className='opt';
+      b.textContent = o.label;
+      b.onclick = ()=>answerStage2(q.type, o.score);
+      optBox.appendChild(b);
+    });
+  }
+  else if(state.phase===3){
+    // 見きわめ：仮タイプと、間違えやすい「そっくりさんタイプ」の比較
+    const key = crossKey(state.tentativeType, lookAlike[state.tentativeType]);
+    const q = crossQs[key][state.idx];
+    qText.textContent = 'より「自分に近い」のは、どちらですか？';
+    // 表示順をシャッフルしすぎると戻る処理が複雑になるため固定順で表示
+    [['A',q.a],['B',q.b]].forEach(([label,o])=>{
+      const b = document.createElement('button');
+      b.className='opt';
+      b.innerHTML = '<span class="opt-head">'+label+'</span>'+o.t;
+      b.onclick = ()=>answerCross(o.type);
+      optBox.appendChild(b);
+    });
+  }
+  else{
+    const q = wingQs[state.mainType][state.idx];
+    qText.textContent = '近いのは、どちらですか？';
+    [['A',q.a],['B',q.b]].forEach(([label,o])=>{
+      const b = document.createElement('button');
+      b.className='opt';
+      b.innerHTML = '<span class="opt-head">'+label+'</span>'+o.t;
+      b.onclick = ()=>answerWing(o.w);
+      optBox.appendChild(b);
+    });
+  }
+}
+
+/* ==================================================
+   回答処理
+================================================== */
+function answerStage1(c){
+  state.history.push({phase:1, key:c});
+  state.centerScores[c]++;
+  state.idx++;
+  if(state.idx >= stage1.length){
+    // センター決定（同点時は g > h > t の設問傾向でなく、直近の回答を優先）
+    const s = state.centerScores;
+    let best = 'g';
+    ['h','t'].forEach(k=>{ if(s[k] > s[best]) best = k; });
+    // 同点処理：最後に選んだセンターを優先
+    const tied = ['g','h','t'].filter(k=>s[k]===s[best]);
+    if(tied.length>1){
+      for(let i=state.history.length-1;i>=0;i--){
+        const h = state.history[i];
+        if(h.phase===1 && tied.includes(h.key)){ best = h.key; break; }
+      }
+    }
+    state.center = best;
+    state.phase = 2;
+    state.idx = 0;
+    stage2[best].forEach(q=>{
+      state.typeScores[q.type]=0;
+      state.typeMax[q.type]=0;
+    });
+  }
+  renderQuestion();
+}
+
+function answerStage2(type, score){
+  state.history.push({phase:2, type:type, score:score});
+  state.typeScores[type]+=score;
+  if(score===3) state.typeMax[type]++;
+  state.idx++;
+  if(state.idx >= stage2[state.center].length){
+    // 仮タイプ決定 → 見きわめへ
+    const types = Object.keys(state.typeScores).map(Number);
+    types.sort((a,b)=>{
+      if(state.typeScores[b]!==state.typeScores[a]) return state.typeScores[b]-state.typeScores[a];
+      return state.typeMax[b]-state.typeMax[a];
+    });
+    state.tentativeType = types[0];
+    state.phase = 3;
+    state.idx = 0;
+    state.crossVotes = {};
+  }
+  renderQuestion();
+}
+
+function answerCross(type){
+  state.history.push({phase:3, type:type});
+  state.crossVotes[type] = (state.crossVotes[type]||0)+1;
+  state.idx++;
+  const key = crossKey(state.tentativeType, lookAlike[state.tentativeType]);
+  if(state.idx >= crossQs[key].length){
+    // そっくりさんタイプが過半数なら乗り換える
+    const rival = lookAlike[state.tentativeType];
+    if((state.crossVotes[rival]||0) >= 2){
+      state.mainType = rival;
+      state.switched = true;
+    }else{
+      state.mainType = state.tentativeType;
+      state.switched = false;
+    }
+    state.phase = 4;
+    state.idx = 0;
+    state.wingScores = {};
+  }
+  renderQuestion();
+}
+
+function answerWing(w){
+  state.history.push({phase:4, wing:w});
+  state.wingScores[w] = (state.wingScores[w]||0)+1;
+  state.idx++;
+  if(state.idx >= wingQs[state.mainType].length){
+    finishQuiz();
+    return;
+  }
+  renderQuestion();
+}
+
+function goBack(){
+  if(state.history.length===0) return;
+  const last = state.history.pop();
+  if(last.phase===1){
+    state.centerScores[last.key]--;
+    if(state.phase!==1){
+      state.phase=1; state.center=null;
+      state.typeScores={}; state.typeMax={};
+      state.tentativeType=null; state.crossVotes={};
+      state.mainType=null; state.switched=false; state.wingScores={};
+    }
+    state.idx = state.history.filter(h=>h.phase===1).length;
+  }
+  else if(last.phase===2){
+    state.typeScores[last.type]-=last.score;
+    if(last.score===3) state.typeMax[last.type]--;
+    if(state.phase!==2){
+      state.phase=2;
+      state.tentativeType=null; state.crossVotes={};
+      state.mainType=null; state.switched=false; state.wingScores={};
+    }
+    state.idx = state.history.filter(h=>h.phase===2).length;
+  }
+  else if(last.phase===3){
+    state.crossVotes[last.type]--;
+    if(state.phase!==3){
+      state.phase=3;
+      state.mainType=null; state.switched=false; state.wingScores={};
+    }
+    state.idx = state.history.filter(h=>h.phase===3).length;
+  }
+  else{
+    state.wingScores[last.wing]--;
+    state.idx = state.history.filter(h=>h.phase===4).length;
+  }
+  renderQuestion();
+}
+
+/* ==================================================
+   結果表示
+================================================== */
+function finishQuiz(){
+  show('screen-loading');
+  setTimeout(showResult, 2200);
+}
+
+function showResult(){
+  const t = state.mainType;
+  const wings = Object.keys(state.wingScores).map(Number);
+  wings.sort((a,b)=>(state.wingScores[b]||0)-(state.wingScores[a]||0));
+  const wing = wings[0];
+  const r = results[t];
+
+  document.getElementById('seal-kanji').textContent = typeKanji[t];
+  document.getElementById('seal-wing').textContent = 'w'+wing;
+  document.getElementById('type-code').textContent = 'タイプ'+t+'　ウイング'+wing;
+  document.getElementById('type-name').textContent = r.name;
+  document.getElementById('type-catch').textContent = r.catch;
+  document.getElementById('wing-text').innerHTML = wingTexts[t+'-'+wing];
+
+  const zl = document.getElementById('zubari-list');
+  zl.innerHTML='';
+  r.zubari.forEach(z=>{
+    const li = document.createElement('li');
+    li.textContent = z;
+    zl.appendChild(li);
+  });
+
+  document.getElementById('suteki-text').textContent = r.suteki;
+  document.getElementById('shindoi-text').textContent = r.shindoi;
+  document.getElementById('hint-text').textContent = r.hint;
+
+  // センター内スコアのバー／見きわめで乗り換えた場合は「併せ持つ顔」を表示
+  const scoreSec = document.getElementById('score-sec');
+  const switchSec = document.getElementById('switch-sec');
+  if(state.switched){
+    scoreSec.style.display='none';
+    switchSec.style.display='block';
+    const orig = state.tentativeType;
+    document.getElementById('switch-text').textContent =
+      'あなたの答えには、タイプ'+orig+'「'+results[orig].name+'」の雰囲気も強くあらわれていました。'+
+      'タイプ'+t+'とタイプ'+orig+'は、まわりからよく似て見える組み合わせです。'+
+      'あなたはタイプ'+orig+'の持ち味も併せ持った、タイプ'+t+'。それが、あなたらしさの厚みになっています。';
+  }else{
+    switchSec.style.display='none';
+    scoreSec.style.display='block';
+    const area = document.getElementById('score-area');
+    area.innerHTML='';
+    const maxScore = 9; // 3問×3点
+    const entries = Object.keys(state.typeScores).map(Number);
+    entries.sort((a,b)=>state.typeScores[b]-state.typeScores[a]);
+    entries.forEach(tp=>{
+      const row = document.createElement('div');
+      row.className = 'score-row'+(tp===t?' top':'');
+      const pct = Math.max(6, Math.round(state.typeScores[tp]/maxScore*100));
+      row.innerHTML =
+        '<span class="score-name">タイプ'+tp+'　'+results[tp].name+'</span>'+
+        '<div class="score-track"><div class="score-fill" data-w="'+pct+'"></div></div>';
+      area.appendChild(row);
+    });
+  }
+
+  // シェア用テキストを保持
+  window._shareText =
+    'エニアグラム「あなたのトリセツ診断」をやってみたら、\n'+
+    '私は【タイプ'+t+'w'+wing+'・'+r.name+'】でした。\n'+
+    '当たりすぎてびっくり…！\n'+
+    location.href;
+
+  show('screen-result');
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('.score-fill').forEach(el=>{
+      el.style.width = el.dataset.w+'%';
+    });
+  });
+}
+
+function copyShareText(){
+  const btn = document.getElementById('share-btn');
+  navigator.clipboard.writeText(window._shareText).then(()=>{
+    btn.textContent = 'コピーしました！';
+    setTimeout(()=>{ btn.textContent='結果をコピーしてシェアする'; }, 2000);
+  }).catch(()=>{
+    prompt('こちらをコピーしてください', window._shareText);
+  });
+}
+
+function retake(){
+  initState();
+  show('screen-intro');
+}
+</script>
+</body>
+</html>
