@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>タイプ絞り込みシート｜『買った瞬間が、いちばん幸せだった』第3章</title>
+<meta name="description" content="Brain『買った瞬間が、いちばん幸せだった』第3章の診断を、そのまま自動で集計するシートです。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F4EC; --ink:#35302B; --shu:#C0392F; --shu-dark:#9E2B23;
+  --indigo:#3C4B6E; --indigo-light:#E8EBF2; --line:#D9D2C3; --soft:#EFEAE0;
+  --white:#FFFDF8; --radius:14px;
+  --font-display:'Shippori Mincho', serif;
+  --font-body:'Zen Kaku Gothic New', sans-serif;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body);
+  font-size:16px; line-height:1.8; padding:0 0 64px;}
+.wrap{max-width:640px; margin:0 auto; padding:0 20px;}
+h1,h2,h3,.disp{font-family:var(--font-display);}
+.hidden{display:none !important;}
+/* 設問中はヘッダを小さくする（スマホの1画面を稼ぐ） */
+body.compact header{padding:14px 0 0;}
+body.compact .seal{transform:scale(.72); transform-origin:center;}
+body.compact .kicker,body.compact .sub{display:none;}
+body.compact h1{font-size:16px; margin:2px 0 0; color:#8a8279; font-weight:500;}
+
+/* ヘッダ */
+header{padding:28px 0 8px; text-align:center;}
+.seal{display:inline-block; border:2px solid var(--shu); color:var(--shu);
+  font-family:var(--font-display); font-size:12px; line-height:1.35; letter-spacing:.08em;
+  padding:7px 9px; border-radius:6px;}
+.kicker{margin-top:14px; font-size:12px; letter-spacing:.16em; color:var(--shu);}
+h1{font-size:23px; line-height:1.5; margin:10px 0 6px;}
+.sub{font-size:14px; color:#6b645c; line-height:1.85;}
+
+/* カード */
+.card{background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+  padding:22px 20px; margin:18px 0;}
+.card h2{font-size:19px; margin:0 0 4px; color:var(--indigo);}
+.card .lead{font-size:14px; color:#6b645c; margin:0 0 16px;}
+
+/* 進捗 */
+.prog{display:flex; align-items:center; gap:10px; margin:22px 0 6px; font-size:12px; color:#8a8279;}
+.bar{flex:1; height:4px; background:var(--soft); border-radius:2px; overflow:hidden;}
+.bar i{display:block; height:100%; background:var(--shu); width:0; transition:width .35s;}
+
+/* 設問 */
+.q{display:flex; gap:12px; align-items:flex-start; padding:14px 14px; margin-bottom:9px;
+  background:var(--white); border:1px solid var(--line); border-radius:12px; cursor:pointer;
+  transition:border-color .15s, background .15s;}
+.q:active{background:var(--soft);}
+.q.on{border-color:var(--shu); background:#FCF6F4;}
+.q .box{flex:none; width:24px; height:24px; border:2px solid var(--line); border-radius:6px;
+  margin-top:2px; position:relative; transition:.15s;}
+.q.on .box{border-color:var(--shu); background:var(--shu);}
+.q.on .box:after{content:""; position:absolute; left:7px; top:2px; width:6px; height:12px;
+  border:solid #fff; border-width:0 2.5px 2.5px 0; transform:rotate(45deg);}
+.q .t{font-size:15px; line-height:1.7;}
+
+/* カウンタ */
+.count{text-align:center; margin:18px 0 4px; font-size:15px; color:var(--indigo);}
+.count b{font-family:var(--font-display); font-size:30px; color:var(--shu); margin:0 6px;}
+
+/* ボタン */
+.btn{display:block; width:100%; border:0; border-radius:999px; padding:16px;
+  font-family:var(--font-body); font-size:16px; font-weight:700; letter-spacing:.04em;
+  background:var(--shu); color:#fff; cursor:pointer; margin-top:14px;}
+.btn:active{background:var(--shu-dark);}
+.btn[disabled]{background:#CFC8BC; cursor:default;}
+.btn.ghost{background:transparent; color:var(--indigo); border:1px solid var(--line); font-weight:500;}
+.back{display:inline-block; margin-top:14px; font-size:13px; color:#8a8279;
+  background:none; border:0; cursor:pointer; text-decoration:underline;}
+
+/* 結果 */
+.res{text-align:center; padding:26px 20px;}
+.res .no{font-family:var(--font-display); font-size:15px; letter-spacing:.14em; color:var(--shu);}
+.res .big{font-family:var(--font-display); font-size:46px; line-height:1.1; color:var(--indigo); margin:6px 0 2px;}
+.res .nm{font-family:var(--font-display); font-size:20px; color:var(--indigo);}
+.res .one{font-size:14.5px; color:#5c554d; margin-top:14px; line-height:1.9;
+  border-top:1px solid var(--line); padding-top:14px; text-align:left;}
+.pair{display:grid; gap:12px;}
+@media(min-width:520px){ .pair.two{grid-template-columns:1fr 1fr;} }
+.note{font-size:13px; color:#7d766e; line-height:1.85; background:var(--indigo-light);
+  border-radius:12px; padding:14px 16px; margin-top:16px;}
+.cta{border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-top:20px; background:var(--white);}
+.cta h3{font-size:16px; margin:0 0 8px; color:var(--indigo);}
+.cta p{font-size:14px; color:#6b645c; margin:0 0 6px; line-height:1.85;}
+.cta a.btn{text-decoration:none; text-align:center;}
+footer{text-align:center; font-size:12px; color:#9a938a; margin-top:34px; line-height:2;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="seal">タイプ<br>絞り込み</div>
+  <div class="kicker">公認心理師さっちゃん　無料</div>
+  <h1>タイプ絞り込みシート</h1>
+  <div class="sub">Brain『買った瞬間が、いちばん幸せだった』<br>第3章の診断を、そのまま自動で集計します。</div>
+</header>
+
+<!-- イントロ -->
+<section id="s-intro">
+  <div class="card">
+    <h2>使い方</h2>
+    <p class="lead">3〜4分で終わります。</p>
+    <p style="font-size:15px;margin:0 0 14px;">
+      「はい」と思うものだけ、チェックしてください。<br>
+      迷ったら、チェックしなくて大丈夫です。
+    </p>
+    <p style="font-size:14px;color:#6b645c;margin:0;">
+      「こうありたい自分」ではなく、<b>ここ1〜2年の、ふだんの自分</b>で答えてくださいね。
+    </p>
+    <button class="btn" onclick="go('g0')">はじめる</button>
+  </div>
+  <div class="note">
+    これは<b>タイプを確定させるものではありません。</b>候補を見つけるためのシートです。<br>
+    2つ出ても、決まらなくても、そのまま本編を読み進められます。
+  </div>
+</section>
+
+<!-- STEP1 グループ -->
+<section id="s-g" class="hidden">
+  <div class="prog"><span id="pg-label">STEP1</span><span class="bar"><i id="pg-fill"></i></span><span id="pg-num"></span></div>
+  <div class="card">
+    <h2 id="g-title"></h2>
+    <p class="lead" id="g-lead"></p>
+    <div id="g-qs"></div>
+    <div class="count">チェックした数　<b id="g-count">0</b>／5</div>
+    <button class="btn" onclick="nextGroup()">次へ</button>
+    <button class="back" onclick="backGroup()">ひとつ戻る</button>
+  </div>
+</section>
+
+<!-- STEP1 結果 -->
+<section id="s-mid" class="hidden">
+  <div class="card">
+    <h2>STEP1の結果</h2>
+    <p class="lead">チェックの数は、こうなりました。</p>
+    <div id="mid-list"></div>
+    <div class="note" id="mid-note"></div>
+    <button class="btn" onclick="startStep2()">STEP2へ進む</button>
+  </div>
+</section>
+
+<!-- STEP2 -->
+<section id="s-s2" class="hidden">
+  <div class="prog"><span>STEP2</span><span class="bar"><i id="s2-fill"></i></span><span id="s2-num"></span></div>
+  <div class="card">
+    <h2 id="s2-title"></h2>
+    <p class="lead">この中から、<b>より自分に近いものを2つ</b>選んでください。</p>
+    <div id="s2-qs"></div>
+    <div class="count">選んだ数　<b id="s2-count">0</b>／2</div>
+    <button class="btn" id="s2-btn" disabled onclick="nextS2()">結果を見る</button>
+  </div>
+</section>
+
+<!-- 結果 -->
+<section id="s-res" class="hidden">
+  <div id="res-body"></div>
+</section>
+
+<footer>
+  監修：髙橋さつき（公認心理師）<br>
+  エニアグラム × 応用行動分析
+</footer>
+</div>
+
+<script>
+const GROUPS=[
+ {key:"ora",name:"オラオラ型",lead:"自分から動いて、外に働きかける",
+  qs:["欲しいものや達成したいことがあれば、自分から動いて手に入れてきた。",
+      "人から指示されたり、やり方を決められたりするのが苦手だ。",
+      "楽しそう・面白そうと感じたら、深く考えずに動いてしまうことがある。",
+      "自分の意見や気持ちを、はっきり伝えることができる。",
+      "その場の中心にいることが多く、自分から話題を作ったり場を動かしたりしがちだ。"],
+  s2:["人から認められたい・注目されたいという気持ちが、行動の原動力になっている。",
+      "結果や成果を出すために、効率よく動くことを意識している。",
+      "楽しいことや新しいことへの好奇心で動くことが多く、途中で飽きてしまうこともある。",
+      "「これだ！」と感じたら一気に動くが、やりたくないことは後回しにしがちだ。",
+      "自分が主導権を持ちたい・誰かに支配されたくないという気持ちが強い。",
+      "人から弱く見られることや、誰かに頼ることに強い抵抗がある。"],
+  map:[3,3,7,7,8,8]},
+ {key:"niko",name:"ニコニコ型",lead:"人に合わせて、関係の中で動く",
+  qs:["周りの期待に応えたいという気持ちが強く、頼まれると断りにくい。",
+      "物事を進めるとき、正しいかどうか・間違っていないかどうかがとても気になる。",
+      "人間関係の中で、嫌われたり仲間外れにされることがとても怖い。",
+      "困っている人がいると、放っておけずに助けようとしてしまう。",
+      "場の空気を壊さないよう、自分の本音を抑えることが多い。"],
+  s2:["信頼できる人や後押ししてくれる人がいると、安心して動ける。",
+      "物事の正しさやルールにこだわり、いい加減なことが許せないことがある。",
+      "人の役に立つことや、感謝されることで、自分の存在価値を感じやすい。",
+      "自分のことは後回しにしても、大切な人のために動いてしまうことが多い。",
+      "自分がやった方が早い・ちゃんとできると思って、つい口や手を出してしまう。",
+      "新しいことを始めるとき、失敗したらどうしようという不安が先に来る。"],
+  map:[6,1,2,2,1,6]},
+ {key:"mys",name:"ミステリアス型",lead:"いったん引いて、内側で考える",
+  qs:["一人の時間や自分だけの世界が、とても大切だ。",
+      "人と深く関わるより、少し距離をおいた関係の方が心地よい。",
+      "争いや対立が起きそうな場面では、まず冷静に引いてしまう。",
+      "自分の気持ちや考えを、求められてその場ですぐに言葉にするのが苦手だ。",
+      "現実の出来事より、頭の中で考えたり想像したりしている時間が長い。"],
+  s2:["一人で黙々と取り組む時間が好きで、知識や情報を集めることが苦にならない。",
+      "問題があってもとりあえず今は大丈夫、とやり過ごしてしまうことがある。",
+      "自分の感情や世界観を、誰かにわかってもらいたいという気持ちが強い。",
+      "争いを避けるために、自分の意見より周りの意見に合わせることが多い。",
+      "興味のあることは徹底的に調べ、深く知りたい、意味付けしたいという欲求が強い。",
+      "自分は人と違う・特別な存在でありたいという気持ちが、どこかにある。"],
+  map:[5,9,4,9,5,4]}
+];
+const TYPES={
+ 1:{n:"完璧でありたい人",o:"体系立っていて、抜けがないもの。「これに沿って進めれば、きちんと身につけられそう」に惹かれます。"},
+ 2:{n:"人の力になりたい人",o:"誰かの顔が浮かぶと、学ぶ理由がはっきりする。「これができたら喜んでもらえそう」に惹かれます。"},
+ 3:{n:"結果を出したい人",o:"実績、数字、ビフォーアフター。「この人が結果を出した方法なら」に惹かれます。"},
+ 4:{n:"自分らしくありたい人",o:"言葉、雰囲気、世界観。「この人は私のことをわかっている」と感じると、特別に見えてきます。"},
+ 5:{n:"知っておきたい人",o:"情報量、資料の充実、あとから見返せること。「手元にあれば、必要なときに困らない」に惹かれます。"},
+ 6:{n:"安心していたい人",o:"評判、実績、保証、相談できる相手。「困ったときにも支えてもらえそう」に惹かれます。"},
+ 7:{n:"楽しくいたい人",o:"新しさ、楽しさ、未来の可能性。「これがあれば変われそう」という瞬間に、気持ちが動きます。"},
+ 8:{n:"自分の力でいたい人",o:"自分のペースで進められること。自力で解決できる道具に惹かれます。"},
+ 9:{n:"穏やかでいたい人",o:"強い「欲しい」がなくても、「いいかも」「断るほどでもないか」で選ぶことがあります。"}
+};
+const LINE="https://lin.ee/yxYXouv";
+let gi=0, counts=[0,0,0], picks=[[],[],[]], winners=[], s2i=0, s2pick=[], results=[];
+
+function go(id){
+  document.body.classList.toggle('compact', id!=='s-intro');
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+  if(id==='g0'){ gi=0; renderGroup(); document.getElementById('s-g').classList.remove('hidden'); }
+  else document.getElementById(id).classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderGroup(){
+  const g=GROUPS[gi];
+  document.getElementById('g-title').textContent=g.name;
+  document.getElementById('g-lead').textContent=g.lead;
+  document.getElementById('pg-label').textContent='STEP1';
+  document.getElementById('pg-num').textContent=(gi+1)+' / 3';
+  document.getElementById('pg-fill').style.width=((gi)/3*100)+'%';
+  const box=document.getElementById('g-qs'); box.innerHTML='';
+  g.qs.forEach((t,i)=>{
+    const on=picks[gi].includes(i);
+    const el=document.createElement('div');
+    el.className='q'+(on?' on':'');
+    el.innerHTML='<span class="box"></span><span class="t">'+t+'</span>';
+    el.onclick=()=>{
+      const k=picks[gi].indexOf(i);
+      if(k>-1) picks[gi].splice(k,1); else picks[gi].push(i);
+      el.classList.toggle('on');
+      document.getElementById('g-count').textContent=picks[gi].length;
+    };
+    box.appendChild(el);
+  });
+  document.getElementById('g-count').textContent=picks[gi].length;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function nextGroup(){
+  counts[gi]=picks[gi].length;
+  if(gi<2){ gi++; renderGroup(); }
+  else showMid();
+}
+function backGroup(){ if(gi>0){ gi--; renderGroup(); } else go('s-intro'); }
+
+function showMid(){
+  const max=Math.max(...counts);
+  winners=[]; counts.forEach((c,i)=>{ if(c===max) winners.push(i); });
+  const list=document.getElementById('mid-list'); list.innerHTML='';
+  GROUPS.forEach((g,i)=>{
+    const win=winners.includes(i);
+    list.innerHTML+='<div style="display:flex;justify-content:space-between;align-items:center;'+
+      'padding:12px 14px;margin-bottom:8px;border-radius:12px;border:1px solid '+(win?'var(--shu)':'var(--line)')+
+      ';background:'+(win?'#FCF6F4':'var(--white)')+';">'+
+      '<span class="disp" style="font-size:16px;color:'+(win?'var(--shu)':'var(--ink)')+'">'+g.name+'</span>'+
+      '<span class="disp" style="font-size:22px;color:'+(win?'var(--shu)':'#B6AFA5')+'">'+counts[i]+'</span></div>';
+  });
+  const note=document.getElementById('mid-note');
+  if(max===0){ note.innerHTML='どれにもチェックがつきませんでした。<b>ひとつ戻って、もう一度見てみてください。</b>それでも変わらなければ、タイプを決めずに本編を読み進めて大丈夫です。'; }
+  else if(winners.length===1){ note.innerHTML='<b>'+GROUPS[winners[0]].name+'</b>が、いちばん多くなりました。<br>次のSTEP2で、もう少し絞り込みます。'; }
+  else { note.innerHTML='同じ数のグループが<b>'+winners.length+'つ</b>ありました。<br><b>同点は、よくあることです。</b>両方のSTEP2に答えて、候補を出しましょう。'; }
+  go('s-mid');
+}
+function startStep2(){ s2i=0; results=[]; renderS2(); }
+function renderS2(){
+  const g=GROUPS[winners[s2i]];
+  document.getElementById('s2-title').textContent=g.name+'の方へ';
+  document.getElementById('s2-num').textContent=(s2i+1)+' / '+winners.length;
+  document.getElementById('s2-fill').style.width=((s2i)/winners.length*100)+'%';
+  s2pick=[];
+  const box=document.getElementById('s2-qs'); box.innerHTML='';
+  const maru='①②③④⑤⑥';
+  g.s2.forEach((t,i)=>{
+    const el=document.createElement('div');
+    el.className='q';
+    el.innerHTML='<span class="box"></span><span class="t"><b style="color:var(--shu);margin-right:6px;">'+maru[i]+'</b>'+t+'</span>';
+    el.onclick=()=>{
+      const k=s2pick.indexOf(i);
+      if(k>-1){ s2pick.splice(k,1); el.classList.remove('on'); }
+      else{ if(s2pick.length>=2) return; s2pick.push(i); el.classList.add('on'); }
+      document.getElementById('s2-count').textContent=s2pick.length;
+      document.getElementById('s2-btn').disabled = s2pick.length!==2;
+    };
+    box.appendChild(el);
+  });
+  document.getElementById('s2-count').textContent=0;
+  document.getElementById('s2-btn').disabled=true;
+  document.getElementById('s2-btn').textContent = (s2i<winners.length-1)?'次のグループへ':'結果を見る';
+  go('s-s2');
+}
+function nextS2(){
+  const g=GROUPS[winners[s2i]];
+  s2pick.forEach(i=>results.push(g.map[i]));
+  if(s2i<winners.length-1){ s2i++; renderS2(); } else showResult();
+}
+function showResult(){
+  const uniq=[...new Set(results)];
+  const cnt={}; results.forEach(t=>cnt[t]=(cnt[t]||0)+1);
+  const sorted=uniq.sort((a,b)=>cnt[b]-cnt[a]);
+  const top=sorted.slice(0,2);
+  let html='';
+  if(top.length===1){
+    html+='<div class="card res"><div class="no">あなたの候補</div>'+
+      '<div class="big">タイプ'+top[0]+'</div><div class="nm">'+TYPES[top[0]].n+'</div>'+
+      '<div class="one">'+TYPES[top[0]].o+'</div></div>';
+  }else{
+    html+='<div class="pair two">';
+    top.forEach(t=>{ html+='<div class="card res" style="margin:0;"><div class="no">候補</div>'+
+      '<div class="big">タイプ'+t+'</div><div class="nm">'+TYPES[t].n+'</div>'+
+      '<div class="one">'+TYPES[t].o+'</div></div>'; });
+    html+='</div>';
+    const adj = Math.abs(top[0]-top[1])===1 || (top.includes(1)&&top.includes(9));
+    html+='<div class="note">候補が2つ出ました。<b>これも、よくあることです。</b><br>'+
+      (adj?'この2つは<b>となり合うタイプ</b>なので、両方の性質を持ち合わせている（ウイング）可能性があります。':'')+
+      '本編では、<b>両方のところを読んで、胸がざわついたほう</b>を使ってください。</div>';
+  }
+  html+='<div class="note">これは候補を見つけるためのシートです。タイプを確定させるものではありません。<br>'+
+    'しっくりこなければ、<b>タイプを決めないまま読み進めて大丈夫です。</b>「すすめられると断りにくかった」と書ければ、それだけで材料になります。</div>';
+  html+='<div class="cta"><h3>この続きは、本編で</h3>'+
+    '<p>本編『買った瞬間が、いちばん幸せだった』の第4章と第5章に、このタイプの「何に惹かれて買うのか」「どこで止まるのか」「買う前に自分に投げる問い」が書いてあります。</p></div>';
+  html+='<div class="cta"><h3>もっと詳しく知りたい方へ</h3>'+
+    '<p>45問でタイプを詳しく確認できる診断シート（PDF）を、公式LINEからお渡ししています。</p>'+
+    '<a class="btn" href="'+LINE+'" target="_blank" rel="noopener">公式LINEを見る</a></div>';
+  html+='<button class="btn ghost" onclick="location.reload()">もう一度やる</button>';
+  document.getElementById('res-body').innerHTML=html;
+  go('s-res');
+}
+</script>
+</body>
+</html>
