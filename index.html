@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>あなたのトリセツ診断｜エニアグラム23問でウイングまでわかる無料診断</title>
-<meta name="description" content="23の質問に答えるだけで、あなたの性格のタイプとウイングがわかる無料エニアグラム診断。350人以上のセッション実績を持つ公認心理師さっちゃん監修。">
+<title>あなたのトリセツ診断｜エニアグラム26問でウイングまでわかる無料診断</title>
+<meta name="description" content="26の質問に答えるだけで、あなたの性格のタイプとウイングがわかる無料エニアグラム診断。350人以上のセッション実績を持つ公認心理師さっちゃん監修。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -284,7 +284,7 @@
     <p class="eyebrow">公認心理師さっちゃん監修・無料</p>
     <h1>あなたの<span class="accent">トリセツ</span>診断</h1>
     <p class="intro-lead">
-      23の質問に答えるだけで、<br>
+      26の質問に答えるだけで、<br>
       あなたの性格の「設計図」がわかります。
     </p>
     <div class="card" style="margin-top:22px">
@@ -294,9 +294,11 @@
         <p><span class="mark">三、</span>350人以上のセッション実績をもつ公認心理師が作りました</p>
       </div>
       <p class="intro-note">
-        所要時間は約3〜4分。<br>
-        「こうありたい自分」ではなく、<br>
-        <b>「普段の自分」</b>で、直感的に答えてくださいね。
+        所要時間は約4〜5分。<br>
+        <b>気を張っていない、素のあなた</b>で答えてください。<br>
+        家にいるとき、気心の知れた人といるときの自分です。<br>
+        仕事中の「役割としての自分」ではありません。<br>
+        「こうありたい自分」ではなく、<b>昔から変わらない自分</b>を思い浮かべて、直感でどうぞ。
       </p>
       <button class="btn" onclick="startQuiz()">診断をはじめる</button>
     </div>
@@ -306,7 +308,7 @@
   <section class="screen" id="screen-quiz">
     <div class="progress">
       <div class="progress-label">
-        <span id="progress-count">Q1 / 20</span>
+        <span id="progress-count">Q1 / 26</span>
         <span id="progress-stage-label">第一章</span>
       </div>
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
@@ -324,7 +326,7 @@
     <div class="loading-box">
       <div class="loading-seal">綴</div>
       <p class="loading-text">あなたのトリセツを綴じています…</p>
-      <p class="loading-sub">23の答えから、そっくりさんタイプとの見きわめまで行っています</p>
+      <p class="loading-sub">26の答えから、似ているタイプとの見きわめまで行っています</p>
     </div>
   </section>
 
@@ -367,7 +369,7 @@
       <div class="sec" id="score-sec">
         <p class="sec-title">あなたの中のバランス</p>
         <div class="score-area" id="score-area"></div>
-        <p class="score-note">※同じグループの3タイプの中での、あなたの傾向の強さです。</p>
+        <p class="score-note">※9タイプのうち、あなたの中で強くあらわれた上位5つです。</p>
       </div>
 
       <div class="sec" id="switch-sec" style="display:none">
@@ -421,93 +423,29 @@
 ================================================== */
 
 // --- 第1段階：センター判定（6問・3択） g=本能(体) h=感情(心) t=思考(頭)
-const stage1 = [
-  {
-    q:"大事な決断を迫られたとき、まず…",
-    opts:[
-      {t:"考えるより先に、直感で体が動いている", c:"g"},
-      {t:"周りの人がどう思うか、関係がどうなるかが気になる", c:"h"},
-      {t:"頭の中で、選択肢やプランが次々に浮かぶ", c:"t"}
-    ]
-  },
-  {
-    q:"イラッとしたとき、私は…",
-    opts:[
-      {t:"態度や行動に、つい出てしまう", c:"g"},
-      {t:"「嫌われたかな」と、相手との関係のほうが気になる", c:"h"},
-      {t:"いったん距離を置いて、頭の中で整理したくなる", c:"t"}
-    ]
-  },
-  {
-    q:"初対面の人が多い場では…",
-    opts:[
-      {t:"場の空気を、自分のペースに持っていきたい", c:"g"},
-      {t:"自分が相手にどう見られているかが気になる", c:"h"},
-      {t:"まず様子を観察して、安全かどうか確かめたい", c:"t"}
-    ]
-  },
-  {
-    q:"どっと疲れる一番の原因は…",
-    opts:[
-      {t:"物事が思い通りに進まないこと", c:"g"},
-      {t:"人からの評価や、気持ちのすれ違い", c:"h"},
-      {t:"考えごとや頭の忙しさが、止まらないこと", c:"t"}
-    ]
-  },
-  {
-    q:"自分の中で強いと感じるのは…",
-    opts:[
-      {t:"「こうあるべき」「これは譲れない」という感覚", c:"g"},
-      {t:"「わかってほしい」「認めてほしい」という気持ち", c:"h"},
-      {t:"「ちゃんと理解したい」「先の選択肢を考えておきたい」という気持ち", c:"t"}
-    ]
-  },
-  {
-    q:"「いい休日だった」と思えるのは…",
-    opts:[
-      {t:"体を動かした、やりたいことをやり切った日", c:"g"},
-      {t:"大切な人と、いい時間を過ごせた日", c:"h"},
-      {t:"興味のあることを調べたり、次の楽しい計画を立てたりできた日", c:"t"}
-    ]
-  }
+// --- 第一章：タイプ判定（9タイプ×2問＝18問・4段階）
+// センターで分岐しない。全員が全タイプに答えるので「最初に外したら戻れない」が起きない。
+// 設問は「行動」ではなく「動機」で書き、強い/弱いで答えが動く言葉を避けている。
+const items = [
+  {type:1, q:"「まあ、これくらいでいいか」がうまくできない。つい直したくなる"},
+  {type:1, q:"自分に関係ないことでも、間違っているのを見るとモヤモヤする"},
+  {type:2, q:"人が困っていることに、まわりより先に気づくほうだ"},
+  {type:2, q:"誰かの役に立てたとき、自分の存在に安心する"},
+  {type:3, q:"成果が目に見えないと、その時間が無駄だったように感じる"},
+  {type:3, q:"自分が一番よく見える見せ方を、わかっている"},
+  {type:4, q:"みんなと同じものを選んだとき、なんとなく物足りない"},
+  {type:4, q:"「自分には何かが足りない」という感覚が、昔からずっとある"},
+  {type:5, q:"感情論で押し切られると、「話にならないな」と内心さめてしまう"},
+  {type:5, q:"話す前に、まず自分の中で整理しておきたい"},
+  {type:6, q:"うまくいっているときほど、「何か落とし穴があるのでは」と思う"},
+  {type:6, q:"大事なことは、信頼できる人に確かめてから決めたい"},
+  {type:7, q:"予定が一つに絞られるより、選択肢がいくつもあるほうが安心する"},
+  {type:7, q:"場の空気が重くなってくると、明るいほうへ持っていきたくなる"},
+  {type:8, q:"口を出されると、内容より「口を出された」ことのほうに反応してしまう"},
+  {type:8, q:"遠慮されるより、本音でぶつかってこられるほうが信頼できる"},
+  {type:9, q:"人の話を聞いているうちに、自分がどうしたいのかわからなくなることがある"},
+  {type:9, q:"もめそうな気配を感じると、気配を消してその場から離れたくなる"}
 ];
-
-// --- 第2段階：タイプ判定（センター別9問・4段階）
-const stage2 = {
-  g:[ // 本能：8,9,1
-    {q:"遠回しな言い方より、はっきり言ってほしいし、自分もはっきり言うほうだ", type:8},
-    {q:"理不尽なことには、黙っていられない", type:8},
-    {q:"弱音を吐くのは苦手。つい「大丈夫」と言ってしまう", type:8},
-    {q:"揉めるくらいなら、自分が我慢したほうがラクだと感じる", type:9},
-    {q:"「どっちでもいいよ」が口ぐせになっている", type:9},
-    {q:"一人でぼーっとする時間がないと、充電できない", type:9},
-    {q:"「〜すべき」「ちゃんと」という言葉を、よく使う", type:1},
-    {q:"人のミスや、ルールを守らない人が、どうしても気になる", type:1},
-    {q:"完璧にできなかった自分を、夜になって責めてしまうことがある", type:1}
-  ],
-  h:[ // 感情：2,3,4
-    {q:"頼まれると断れない。困っている人を放っておけない", type:2},
-    {q:"「ありがとう」と言われると、疲れが吹き飛ぶ", type:2},
-    {q:"人を助けるのは得意なのに、自分がお願いごとをするのは苦手", type:2},
-    {q:"「すごいね」と言われるためなら、頑張れる", type:3},
-    {q:"効率よく結果を出すのが得意で、無駄なことが嫌い", type:3},
-    {q:"立ち止まると不安になる。予定が埋まっていると安心する", type:3},
-    {q:"「普通だね」と言われても、褒め言葉に聞こえない", type:4},
-    {q:"感情の波が大きく、気分に左右されやすい", type:4},
-    {q:"「誰にもわかってもらえない」と感じることがある", type:4}
-  ],
-  t:[ // 思考：5,6,7
-    {q:"急に話を振られるのが苦手。頭の中で考えてから話したい", type:5},
-    {q:"一人の時間とエネルギーを、人に奪われたくない", type:5},
-    {q:"よく知らないことに、軽々しく口を出したくない", type:5},
-    {q:"最悪のケースを想定して、備えておかないと不安", type:6},
-    {q:"「本当に大丈夫？」と、何度も確認してしまう", type:6},
-    {q:"信頼できる人や決まったやり方があると、安心する", type:6},
-    {q:"楽しい予定を考えているときが、一番幸せ", type:7},
-    {q:"つらいことがあっても「まあ、なんとかなる」と切り替えが早い", type:7},
-    {q:"一つのことをじっくり続けるより、新しいことに目移りしがち", type:7}
-  ]
-};
 
 const scaleOpts = [
   {label:"とてもあてはまる", score:3},
@@ -583,9 +521,8 @@ const wingQs = {
   ]
 };
 
-// --- 第3段階：見きわめ（間違えやすいタイプ同士のクロスチェック・3問）
-// 仮タイプに対して、混同しやすい「そっくりさんタイプ」との比較質問を出す
-const lookAlike = {1:6, 2:9, 3:7, 4:9, 5:9, 6:1, 7:8, 8:7, 9:2};
+// --- 第二章：見きわめ（スコア上位2タイプの比較・3問）
+// よく混同される組み合わせは専用の質問を用意。ない組み合わせは core（動機の比較）で出す。
 const crossQs = {
   "7-8":[
     {a:{t:"一番避けたいのは、退屈と、つらい気持ちにどっぷり浸ること", type:7},
@@ -634,9 +571,99 @@ const crossQs = {
      b:{t:"詳しく知らなくても、あまり気にならない", type:9}},
     {a:{t:"自分の時間や空間は、はっきり線を引いて守りたい", type:5},
      b:{t:"頼まれると、自分の予定を後回しにしがち", type:9}}
+  ],
+  "8-9":[
+    {a:{t:"嫌なことは、その場でぶつけて片づけたい", type:8},
+     b:{t:"嫌なことがあっても、とりあえず飲み込んで流す", type:9}},
+    {a:{t:"自分のペースを乱されると、押し返したくなる", type:8},
+     b:{t:"自分のペースを乱されても、まあいいかと合わせてしまう", type:9}},
+    {a:{t:"怒りは、わりとすぐに表に出る", type:8},
+     b:{t:"怒りは、自分でも気づかないうちに溜まっている", type:9}}
+  ],
+  "1-9":[
+    {a:{t:"決めごとは、自分から進んできちんとやる", type:1},
+     b:{t:"決めごとがあるなら、それに合わせておけばラク", type:9}},
+    {a:{t:"気になるところがあると、黙っていられない", type:1},
+     b:{t:"気になるところがあっても、場が丸く収まるなら言わない", type:9}},
+    {a:{t:"自分に対して、厳しいほうだ", type:1},
+     b:{t:"自分に対して、わりとゆるいほうだ", type:9}}
+  ],
+  "2-3":[
+    {a:{t:"人に喜ばれることが、何よりのやりがい", type:2},
+     b:{t:"目標を達成することが、何よりのやりがい", type:3}},
+    {a:{t:"気持ちが通じ合う関係を、大事にしたい", type:2},
+     b:{t:"お互いに高め合える関係を、大事にしたい", type:3}},
+    {a:{t:"疲れていても、頼まれたら動いてしまう", type:2},
+     b:{t:"疲れていても、やると決めたことはやり切る", type:3}}
+  ],
+  "6-7":[
+    {a:{t:"新しいことは、安全を確かめてから始めたい", type:6},
+     b:{t:"新しいことは、面白そうならまず飛び込みたい", type:7}},
+    {a:{t:"不安なときは、信頼できる人に相談したい", type:6},
+     b:{t:"不安なときは、楽しいことで気持ちを切り替えたい", type:7}},
+    {a:{t:"「もしも」を考えて準備しておくと、落ち着く", type:6},
+     b:{t:"「もしも」を考えるより、今を楽しみたい", type:7}}
+  ],
+  "4-5":[
+    {a:{t:"つらいときは、その気持ちをじっくり味わう", type:4},
+     b:{t:"つらいときは、気持ちより状況を分析する", type:5}},
+    {a:{t:"わかってくれる人が、いてほしい", type:4},
+     b:{t:"放っておいてくれる人が、ありがたい", type:5}},
+    {a:{t:"自分の感情こそが、自分らしさだと思う", type:4},
+     b:{t:"自分の考えこそが、自分らしさだと思う", type:5}}
+  ],
+  "2-7":[
+    {a:{t:"楽しい場では、みんなが楽しめているかが気になる", type:2},
+     b:{t:"楽しい場では、まず自分が思いきり楽しみたい", type:7}},
+    {a:{t:"人のために、予定を空けておくことが多い", type:2},
+     b:{t:"自分のやりたい予定で、スケジュールが埋まっていく", type:7}},
+    {a:{t:"「ありがとう」と言われると、報われる", type:2},
+     b:{t:"「楽しかった！」と思えると、満たされる", type:7}}
+  ],
+  "1-4":[
+    {a:{t:"気持ちより、正しいかどうかで判断したい", type:1},
+     b:{t:"正しさより、自分の気持ちにしっくりくるかで判断したい", type:4}},
+    {a:{t:"きちんとしていれば、それでいい", type:1},
+     b:{t:"きちんとしていても、自分らしくなければ意味がない", type:4}},
+    {a:{t:"感情は、なるべく抑えておきたい", type:1},
+     b:{t:"感情は、ごまかさずに感じていたい", type:4}}
+  ],
+  "4-7":[
+    {a:{t:"悲しいことからも、目をそらさずに向き合いたい", type:4},
+     b:{t:"悲しいことより、楽しいほうに目を向けたい", type:7}},
+    {a:{t:"深く狭く、ひとつのことを味わいたい", type:4},
+     b:{t:"広く浅く、いろいろなことを味わいたい", type:7}},
+    {a:{t:"満たされない感じが、心のどこかにいつもある", type:4},
+     b:{t:"探せば楽しいことは、いつでもあると思う", type:7}}
+  ],
+  "5-8":[
+    {a:{t:"行動する前に、まず十分に理解しておきたい", type:5},
+     b:{t:"理解するより先に、まず動いて確かめたい", type:8}},
+    {a:{t:"対立は、できれば距離を取って避けたい", type:5},
+     b:{t:"対立は、必要なら正面から受けて立つ", type:8}},
+    {a:{t:"力より、知識で身を守りたい", type:5},
+     b:{t:"知識より、行動力で道を開きたい", type:8}}
   ]
 };
+// 専用の質問がない組み合わせ用：タイプごとの「動機」3観点（いやなこと／ありたい自分／余裕がないとき）
+const core = {
+  1:["間違っていること、いい加減なことが、一番いや","「ちゃんとしている自分」でいたい","余裕がないと、自分にも人にも厳しくなる"],
+  2:["人から必要とされないことが、一番いや","「誰かの力になれる自分」でいたい","余裕がないと、尽くしたのに報われない気持ちになる"],
+  3:["価値がないと思われることが、一番いや","「結果を出している自分」でいたい","余裕がないと、弱っていても平気なふりを続ける"],
+  4:["ありきたりで、誰でもいい存在になることが、一番いや","「自分らしくいられる自分」でいたい","余裕がないと、気持ちの中に沈み込んでしまう"],
+  5:["何もわからないまま巻き込まれることが、一番いや","「よくわかっている自分」でいたい","余裕がないと、人から離れて自分の殻にこもる"],
+  6:["頼れるものがなくなることが、一番いや","「安心していられる自分」でいたい","余裕がないと、あれこれ心配が止まらなくなる"],
+  7:["身動きがとれず、つらさから逃げられないことが、一番いや","「楽しくいられる自分」でいたい","余裕がないと、予定や楽しみで気持ちを埋める"],
+  8:["人に主導権を握られることが、一番いや","「自分の足で立っている自分」でいたい","余裕がないと、言い方や態度がきつくなる"],
+  9:["波風が立って、関係がぎくしゃくすることが、一番いや","「穏やかでいられる自分」でいたい","余裕がないと、やるべきことを後回しにしてしまう"]
+};
 function crossKey(t1,t2){ return Math.min(t1,t2)+"-"+Math.max(t1,t2); }
+function crossSet(t1,t2){
+  const key = crossKey(t1,t2);
+  if(crossQs[key]) return crossQs[key];
+  const lo = Math.min(t1,t2), hi = Math.max(t1,t2);
+  return [0,1,2].map(i=>({a:{t:core[lo][i], type:lo}, b:{t:core[hi][i], type:hi}}));
+}
 
 // --- 結果テキスト（タイプ別）
 const results = {
@@ -780,29 +807,37 @@ const centerNames = {g:"体で感じるグループ", h:"心で感じるグル�
 ================================================== */
 let state = null;
 
+function shuffled(n){
+  const a = [...Array(n).keys()];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
 function initState(){
+  const scores = {}; const max3 = {};
+  for(let t=1;t<=9;t++){ scores[t]=0; max3[t]=0; }
   state = {
-    phase:1,          // 1:センター 2:タイプ 3:見きわめ 4:ウイング
-    idx:0,            // 現フェーズ内の質問番号
-    centerScores:{g:0,h:0,t:0},
-    center:null,
-    typeScores:{},    // 第2段階のタイプ別スコア
-    typeMax:{},       // 「とてもあてはまる」の数（同点時用）
-    tentativeType:null, // 第2段階で決まった仮タイプ
-    crossVotes:{},    // 見きわめの得票
-    mainType:null,    // 最終確定タイプ
-    switched:false,   // 見きわめでタイプが入れ替わったか
+    phase:1,          // 1:タイプ 2:見きわめ 3:ウイング
+    idx:0,
+    order: shuffled(items.length), // 設問の出題順（タイプ順だと答えが歪むためシャッフル）
+    typeScores:scores,
+    typeMax:max3,     // 「とてもあてはまる」の数（同点時用）
+    top:[],           // スコア上位2タイプ
+    gap:0,            // 上位2タイプの点差
+    tentativeType:null,
+    crossVotes:{},
+    mainType:null,
+    switched:false,
     wingScores:{},
-    history:[]        // 戻る用
+    history:[]
   };
 }
 
-const TOTAL_Q = 23;
+const TOTAL_Q = items.length + 3 + 5; // 18 + 見きわめ3 + ウイング5 = 26
 function totalAnswered(){
   if(state.phase===1) return state.idx;
-  if(state.phase===2) return 6 + state.idx;
-  if(state.phase===3) return 15 + state.idx;
-  return 18 + state.idx;
+  if(state.phase===2) return items.length + state.idx;
+  return items.length + 3 + state.idx;
 }
 
 /* ==================================================
@@ -826,8 +861,8 @@ function renderQuestion(){
   document.getElementById('progress-fill').style.width = ((n-1)/TOTAL_Q*100)+'%';
   document.getElementById('back-btn').style.visibility = (n===1?'hidden':'visible');
 
-  const stageLabels = {1:'第一章　あなたの重心', 2:'第二章　あなたのタイプ', 3:'第三章　見きわめ', 4:'第四章　あなたの味つけ'};
-  document.getElementById('progress-stage-label').textContent = ['','第一章','第二章','第三章','第四章'][state.phase];
+  const stageLabels = {1:'第一章　あなたの傾向', 2:'第二章　見きわめ', 3:'第三章　あなたの味つけ'};
+  document.getElementById('progress-stage-label').textContent = ['','第一章','第二章','第三章'][state.phase];
   document.getElementById('q-stage').textContent = stageLabels[state.phase];
 
   const qText = document.getElementById('q-text');
@@ -835,33 +870,19 @@ function renderQuestion(){
   optBox.innerHTML = '';
 
   if(state.phase===1){
-    const q = stage1[state.idx];
-    qText.textContent = q.q;
-    q.opts.forEach(o=>{
-      const b = document.createElement('button');
-      b.className='opt';
-      b.textContent = o.t;
-      b.onclick = ()=>answerStage1(o.c);
-      optBox.appendChild(b);
-    });
-  }
-  else if(state.phase===2){
-    const q = stage2[state.center][state.idx];
+    const q = items[state.order[state.idx]];
     qText.textContent = q.q;
     scaleOpts.forEach(o=>{
       const b = document.createElement('button');
       b.className='opt';
       b.textContent = o.label;
-      b.onclick = ()=>answerStage2(q.type, o.score);
+      b.onclick = ()=>answerItem(q.type, o.score);
       optBox.appendChild(b);
     });
   }
-  else if(state.phase===3){
-    // 見きわめ：仮タイプと、間違えやすい「そっくりさんタイプ」の比較
-    const key = crossKey(state.tentativeType, lookAlike[state.tentativeType]);
-    const q = crossQs[key][state.idx];
+  else if(state.phase===2){
+    const q = crossSet(state.top[0], state.top[1])[state.idx];
     qText.textContent = 'より「自分に近い」のは、どちらですか？';
-    // 表示順をシャッフルしすぎると戻る処理が複雑になるため固定順で表示
     [['A',q.a],['B',q.b]].forEach(([label,o])=>{
       const b = document.createElement('button');
       b.className='opt';
@@ -886,48 +907,26 @@ function renderQuestion(){
 /* ==================================================
    回答処理
 ================================================== */
-function answerStage1(c){
-  state.history.push({phase:1, key:c});
-  state.centerScores[c]++;
-  state.idx++;
-  if(state.idx >= stage1.length){
-    // センター決定（同点時は g > h > t の設問傾向でなく、直近の回答を優先）
-    const s = state.centerScores;
-    let best = 'g';
-    ['h','t'].forEach(k=>{ if(s[k] > s[best]) best = k; });
-    // 同点処理：最後に選んだセンターを優先
-    const tied = ['g','h','t'].filter(k=>s[k]===s[best]);
-    if(tied.length>1){
-      for(let i=state.history.length-1;i>=0;i--){
-        const h = state.history[i];
-        if(h.phase===1 && tied.includes(h.key)){ best = h.key; break; }
-      }
-    }
-    state.center = best;
-    state.phase = 2;
-    state.idx = 0;
-    stage2[best].forEach(q=>{
-      state.typeScores[q.type]=0;
-      state.typeMax[q.type]=0;
-    });
-  }
-  renderQuestion();
+function rankTypes(){
+  const types = Object.keys(state.typeScores).map(Number);
+  types.sort((a,b)=>{
+    if(state.typeScores[b]!==state.typeScores[a]) return state.typeScores[b]-state.typeScores[a];
+    return state.typeMax[b]-state.typeMax[a];
+  });
+  return types;
 }
 
-function answerStage2(type, score){
-  state.history.push({phase:2, type:type, score:score});
+function answerItem(type, score){
+  state.history.push({phase:1, type:type, score:score});
   state.typeScores[type]+=score;
   if(score===3) state.typeMax[type]++;
   state.idx++;
-  if(state.idx >= stage2[state.center].length){
-    // 仮タイプ決定 → 見きわめへ
-    const types = Object.keys(state.typeScores).map(Number);
-    types.sort((a,b)=>{
-      if(state.typeScores[b]!==state.typeScores[a]) return state.typeScores[b]-state.typeScores[a];
-      return state.typeMax[b]-state.typeMax[a];
-    });
-    state.tentativeType = types[0];
-    state.phase = 3;
+  if(state.idx >= items.length){
+    const ranked = rankTypes();
+    state.top = [ranked[0], ranked[1]];
+    state.gap = state.typeScores[ranked[0]] - state.typeScores[ranked[1]];
+    state.tentativeType = ranked[0];
+    state.phase = 2;
     state.idx = 0;
     state.crossVotes = {};
   }
@@ -935,21 +934,21 @@ function answerStage2(type, score){
 }
 
 function answerCross(type){
-  state.history.push({phase:3, type:type});
+  state.history.push({phase:2, type:type});
   state.crossVotes[type] = (state.crossVotes[type]||0)+1;
   state.idx++;
-  const key = crossKey(state.tentativeType, lookAlike[state.tentativeType]);
-  if(state.idx >= crossQs[key].length){
-    // そっくりさんタイプが過半数なら乗り換える
-    const rival = lookAlike[state.tentativeType];
-    if((state.crossVotes[rival]||0) >= 2){
+  if(state.idx >= 3){
+    // 2位のタイプが見きわめで2票以上、かつ点差が小さい（3点以内）なら入れ替える。
+    // 点差が大きいときは、18問の結果のほうを信頼する。
+    const rival = state.top[1];
+    if((state.crossVotes[rival]||0) >= 2 && state.gap <= 3){
       state.mainType = rival;
       state.switched = true;
     }else{
-      state.mainType = state.tentativeType;
+      state.mainType = state.top[0];
       state.switched = false;
     }
-    state.phase = 4;
+    state.phase = 3;
     state.idx = 0;
     state.wingScores = {};
   }
@@ -957,7 +956,7 @@ function answerCross(type){
 }
 
 function answerWing(w){
-  state.history.push({phase:4, wing:w});
+  state.history.push({phase:3, wing:w});
   state.wingScores[w] = (state.wingScores[w]||0)+1;
   state.idx++;
   if(state.idx >= wingQs[state.mainType].length){
@@ -971,36 +970,26 @@ function goBack(){
   if(state.history.length===0) return;
   const last = state.history.pop();
   if(last.phase===1){
-    state.centerScores[last.key]--;
+    state.typeScores[last.type]-=last.score;
+    if(last.score===3) state.typeMax[last.type]--;
     if(state.phase!==1){
-      state.phase=1; state.center=null;
-      state.typeScores={}; state.typeMax={};
-      state.tentativeType=null; state.crossVotes={};
+      state.phase=1;
+      state.top=[]; state.gap=0; state.tentativeType=null; state.crossVotes={};
       state.mainType=null; state.switched=false; state.wingScores={};
     }
     state.idx = state.history.filter(h=>h.phase===1).length;
   }
   else if(last.phase===2){
-    state.typeScores[last.type]-=last.score;
-    if(last.score===3) state.typeMax[last.type]--;
+    state.crossVotes[last.type]--;
     if(state.phase!==2){
       state.phase=2;
-      state.tentativeType=null; state.crossVotes={};
       state.mainType=null; state.switched=false; state.wingScores={};
     }
     state.idx = state.history.filter(h=>h.phase===2).length;
   }
-  else if(last.phase===3){
-    state.crossVotes[last.type]--;
-    if(state.phase!==3){
-      state.phase=3;
-      state.mainType=null; state.switched=false; state.wingScores={};
-    }
-    state.idx = state.history.filter(h=>h.phase===3).length;
-  }
   else{
     state.wingScores[last.wing]--;
-    state.idx = state.history.filter(h=>h.phase===4).length;
+    state.idx = state.history.filter(h=>h.phase===3).length;
   }
   renderQuestion();
 }
@@ -1055,9 +1044,8 @@ function showResult(){
     scoreSec.style.display='block';
     const area = document.getElementById('score-area');
     area.innerHTML='';
-    const maxScore = 9; // 3問×3点
-    const entries = Object.keys(state.typeScores).map(Number);
-    entries.sort((a,b)=>state.typeScores[b]-state.typeScores[a]);
+    const maxScore = 6; // 2問×3点
+    const entries = rankTypes().slice(0,5);
     entries.forEach(tp=>{
       const row = document.createElement('div');
       row.className = 'score-row'+(tp===t?' top':'');
