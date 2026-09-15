@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ステップ表メーカー｜積ん読を1つ動かす</title>
+<meta name="description" content="Brain『買った瞬間が、いちばん幸せだった｜積ん読を解消しよう』の読者向け。質問に順番に答えると、積ん読を動かすステップ表が1枚できあがります。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF6E6; --white:#FFFFFF; --ink:#203E1F; --ink2:#5B6B58; --ink3:#8A8577;
+  --green:#456B45; --green-soft:#EAF0E6; --orange:#D9740B; --orange-soft:#FBE8D3;
+  --line:#DCD6C4; --radius:14px;
+  --display:'Shippori Mincho','Hiragino Mincho ProN',serif;
+  --body:'Zen Kaku Gothic New','Hiragino Sans',sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.8;padding-bottom:64px}
+.wrap{max-width:640px;margin:0 auto;padding:0 18px}
+.hidden{display:none!important}
+header{text-align:center;padding:26px 0 4px}
+.kicker{font-size:12px;letter-spacing:.14em;color:var(--orange)}
+h1{font-family:var(--display);font-size:24px;line-height:1.5;margin:6px 0 4px}
+.sub{font-size:14px;color:var(--ink2)}
+body.compact header{padding:12px 0 0}
+body.compact .kicker,body.compact .sub{display:none}
+body.compact h1{font-size:15px;color:var(--ink3);font-weight:600}
+.prog{display:flex;align-items:center;gap:10px;margin:18px 0 4px;font-size:12px;color:var(--ink3)}
+.bar{flex:1;height:5px;background:#EAE3D2;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--orange);width:0;transition:width .35s}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:22px 18px;margin:16px 0}
+.card h2{font-family:var(--display);font-size:20px;margin:0 0 6px;line-height:1.5}
+.step-no{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--green);border-radius:99px;padding:1px 12px;margin-bottom:8px}
+.lead{font-size:14px;color:var(--ink2);margin:0 0 14px}
+label.f{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+label.f small{display:block;font-weight:400;font-size:13px;color:var(--ink3)}
+input[type=text],textarea{width:100%;font-family:var(--body);font-size:16px;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#FFFDF8}
+textarea{min-height:64px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--orange);border-color:transparent}
+.hint{font-size:13px;color:var(--ink2);background:var(--green-soft);border-radius:10px;padding:10px 12px;margin:10px 0}
+.hint.warm{background:var(--orange-soft);color:#6b3c06}
+.hint b{color:var(--ink)}
+.q{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:#FFFDF8}
+.q .qt{font-weight:700}
+.q .qd{font-size:13px;color:var(--ink2);margin:2px 0 10px}
+.ox{display:flex;gap:8px;flex-wrap:wrap}
+.ox button{flex:1;min-width:72px;border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:9px 6px;font-family:var(--body);font-size:15px;font-weight:700;color:var(--ink2);cursor:pointer}
+.ox button.on{border-color:var(--orange);background:var(--orange);color:#fff}
+.opt{display:block;border:1.5px solid var(--line);border-radius:12px;padding:14px;margin:10px 0;cursor:pointer;background:#FFFDF8}
+.opt.on{border-color:var(--orange);background:#FFF7EE}
+.opt .ot{font-weight:700}
+.opt .od{font-size:13px;color:var(--ink2)}
+.sub-fields{margin-top:8px}
+.btn{display:block;width:100%;border:0;border-radius:99px;padding:15px;font-family:var(--body);font-size:16px;font-weight:700;background:var(--orange);color:#fff;cursor:pointer;margin-top:18px}
+.btn[disabled]{background:#CFC8BC;cursor:default}
+.btn.ghost{background:#fff;color:var(--green);border:1px solid var(--line);font-weight:500}
+.btn.small{display:inline-block;width:auto;padding:7px 14px;font-size:13px;margin:6px 0 0}
+.back{display:inline-block;margin-top:12px;font-size:13px;color:var(--ink3);background:none;border:0;cursor:pointer;text-decoration:underline}
+.xlist{margin:10px 0;padding:0;list-style:none}
+.xlist li{padding:8px 12px;border-radius:10px;margin:6px 0;background:#F6F2E6;font-size:14px}
+.xlist li.x{background:var(--orange-soft)}
+.types{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0}
+.types button{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 0;font-family:var(--display);font-size:20px;color:var(--ink);cursor:pointer}
+.types button.on{border-color:var(--orange);background:var(--orange);color:#fff}
+.types button.wide{grid-column:1 / -1;font-family:var(--body);font-size:14px}
+.typebox{border-left:4px solid var(--green);background:var(--green-soft);border-radius:0 10px 10px 0;padding:12px 14px;margin:12px 0;font-size:14px}
+.typebox b{display:block;font-size:15px}
+/* 結果 */
+.sheet{border:2px solid var(--green);border-radius:var(--radius);background:#fff;padding:18px 16px;margin:16px 0}
+.sheet h2{text-align:center;font-family:var(--display);margin:0 0 10px}
+.row{display:grid;grid-template-columns:118px 1fr;gap:8px;padding:10px 0;border-bottom:1px dashed #D5DDCF;font-size:15px}
+.row:last-child{border-bottom:0}
+.row .k{font-size:13px;font-weight:700;color:var(--green)}
+.row.s .k{color:var(--orange)}
+.row .v{white-space:pre-wrap;word-break:break-word}
+.row .v .c{display:inline-block;width:20px;height:20px;border:2px solid var(--orange);border-radius:50%;vertical-align:-4px;margin-left:6px}
+.done-msg{font-size:14px;color:var(--ink2)}
+footer{text-align:center;font-size:12px;color:var(--ink3);margin-top:30px;line-height:1.9}
+footer a{color:var(--green)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:99px;padding:10px 18px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="kicker">『買った瞬間が、いちばん幸せだった』読者の方へ</div>
+  <h1>ステップ表メーカー</h1>
+  <div class="sub">質問に順番に答えると、<br>積ん読を動かすステップ表が1枚できあがります。</div>
+</header>
+
+<div class="prog hidden" id="prog"><span id="progText">1 / 6</span><span class="bar"><i id="progBar"></i></span></div>
+
+<!-- 0 はじめに -->
+<section class="card" data-step="0">
+  <h2>はじめる前に</h2>
+  <p class="lead">本文の第2章〜第5章と、同じ順番で進みます。<br>10分くらいで終わります。途中でやめても、このスマホに保存されるので、続きから再開できます。</p>
+  <div class="hint">この教材では、本に限らず、<b>買ったまま止まっているもの</b>を、ぜんぶ「積ん読」と呼びます。<br>読みかけの本、行っていないジム、開いていない動画講座、放置しているBrain……。</div>
+  <div class="hint warm">書いた内容は、<b>このスマホの中にだけ</b>保存されます。どこにも送信されません。</div>
+  <button class="btn" data-next>はじめる</button>
+  <button class="btn ghost hidden" id="resumeBtn">前回の続きから</button>
+</section>
+
+<!-- 1 積ん読を選ぶ -->
+<section class="card hidden" data-step="1">
+  <span class="step-no">第2章</span>
+  <h2>積ん読を、1つだけ選ぶ</h2>
+  <p class="lead">いちばん高かったものや、いちばん後悔しているものでなくて大丈夫。「これなら振り返れそう」なものを1つ。</p>
+  <label class="f">積ん読の名前</label>
+  <input type="text" id="item" placeholder="例）Instagram運用のBrain">
+  <label class="f">いつ買った？ どこまで進んだ？<small>わかる範囲で。空欄でもOK</small></label>
+  <input type="text" id="itemNote" placeholder="例）3ヶ月前。プロフィールの作り方のところで止まっている">
+  <button class="btn" data-next data-require="item">次へ</button>
+  <button class="back" data-prev>もどる</button>
+</section>
+
+<!-- 2 4つの問い -->
+<section class="card hidden" data-step="2">
+  <span class="step-no">第2章</span>
+  <h2>手が止まった理由を探る、4つの問い</h2>
+  <p class="lead">あったら○、なかったら×。<b>4つとも×でも、まったく問題ありません。</b></p>
+  <div class="hint"><b>「やる」とは？</b> その積ん読を使うこと。<br>本なら読む／動画講座なら見て、実践する／ジムなら通う／サブスクなら使う。</div>
+
+  <div class="q"><div class="qt">問い1　やった後、何か変わった？</div>
+    <div class="qd">少し進めた前と後で、「変わった」と目で見てわかるもの（○をつける場所、記録、誰かの反応）はあった？</div>
+    <div class="ox" data-q="q1"><button data-v="o">○ あった</button><button data-v="x">× なかった</button><button data-v="m">まだ手をつけていない</button></div></div>
+  <div class="hint warm hidden" id="madaHint">まだ一度も手をつけていないときは、<b>買ったとき「こう始めよう」と思っていたこと</b>を思い出して、問い2〜4に答えてください。</div>
+
+  <div class="q"><div class="qt">問い2　1回で、変化が見える大きさだった？</div>
+    <div class="qd">1回にやることは5〜15分で終わる大きさだった？「まとまった時間ができたら」「全部見てから」なら×。</div>
+    <div class="ox" data-q="q2"><button data-v="o">○</button><button data-v="x">×</button></div></div>
+
+  <div class="q"><div class="qt">問い3　「進んだ」の目安は、決まっていた？</div>
+    <div class="qd">何ができるようになったら、この積ん読を使えたと言える？「全部見る」「全部読む」は量の話なので×。</div>
+    <div class="ox" data-q="q3"><button data-v="o">○</button><button data-v="x">×</button></div></div>
+
+  <div class="q"><div class="qt">問い4　わからないとき、行き先はあった？</div>
+    <div class="qd">つまずいたとき、「調べる」「聞く」の行き先は決まっていた？</div>
+    <div class="ox" data-q="q4"><button data-v="o">○</button><button data-v="x">×</button></div></div>
+
+  <label class="f">手が止まっていたあいだ、代わりに何をしていた？<small>空欄でもOK。「〜しない」ではなく、していたことを書きます（例：SNSを見ていた／家事をしていた）</small></label>
+  <input type="text" id="instead" placeholder="例）時間をかけて料理をしていた">
+
+  <button class="btn" data-next data-requireq="q1,q2,q3,q4">次へ</button>
+  <button class="back" data-prev>もどる</button>
+</section>
+
+<!-- 3 ふりかえり -->
+<section class="card hidden" data-step="3">
+  <span class="step-no">第2章</span>
+  <h2>変えられる場所</h2>
+  <p class="lead" id="xLead"></p>
+  <ul class="xlist" id="xList"></ul>
+  <div class="hint hidden" id="insteadHint"></div>
+  <button class="btn" data-next>次の行動を選ぶ</button>
+  <button class="back" data-prev>もどる</button>
+</section>
+
+<!-- 4 次の行動 -->
+<section class="card hidden" data-step="4">
+  <span class="step-no">第3章</span>
+  <h2>その積ん読の、次の行動を選ぶ</h2>
+  <p class="lead">「使う」か「捨てる」かの2択ではありません。いちばん近いものを1つ。</p>
+
+  <div class="opt" data-choice="1"><div class="ot">① ステップに分けて進める</div><div class="od">今も必要で、時間も取れそう</div></div>
+  <div class="opt" data-choice="2"><div class="ot">② 必要なところだけ進める</div><div class="od">必要なのは一部だけ</div>
+    <div class="sub-fields hidden">
+      <label class="f">使うところ</label><input type="text" id="c2use" placeholder="例）「話す順番」の動画3本">
+      <label class="f">使わないところ<small>×をつけたところは、やり残しではなくなります</small></label><input type="text" id="c2skip" placeholder="例）残りの17本">
+    </div></div>
+  <div class="opt" data-choice="3"><div class="ot">③ いったん止めて、見直す日を決める</div><div class="od">今は決められない</div>
+    <div class="sub-fields hidden">
+      <div class="hint"><b>先に2つ確かめます。</b><br>サブスク・月会費なら「次の更新日と、解約・休止の条件」。<br>買ったものの分割払いなら「残りの金額と、契約の条件」。<b>この2つは別のもの</b>です。分割払いは、使わなくなっても支払いが契約どおり残ります。<br>そして、見られる期間・使える期限があるかも。</div>
+      <label class="f">確認したこと<small>わからなければ「明日調べる」でOK</small></label><input type="text" id="c3check" placeholder="例）次の更新は10/1。アプリから解約できる">
+      <label class="f">見直す日</label><input type="text" id="c3date" placeholder="例）9/28（日）">
+    </div></div>
+  <div class="opt" data-choice="4"><div class="ot">④ 手放す</div><div class="od">今の暮らしでは優先しない</div>
+    <div class="sub-fields hidden">
+      <div class="hint warm">使い切らなかったことは、失敗ではありません。<br>そのときのあなたは、ちゃんと動こうとしていた。動こうとしたから、買ったんです。</div>
+      <label class="f">手放し方</label><input type="text" id="c4how" placeholder="例）解約する／売る／譲る">
+    </div></div>
+
+  <button class="btn" data-next data-requirechoice>ステップ表をつくる</button>
+  <button class="back" data-prev>もどる</button>
+</section>
+
+<!-- 5 ステップ表 -->
+<section class="card hidden" data-step="5">
+  <span class="step-no">第4章</span>
+  <h2>ステップ表をつくる</h2>
+  <p class="lead">1つのステップは「見る・読む → やってみる」で、ひとまとまり。終わったら○をつけます。</p>
+  <div id="xTips"></div>
+
+  <label class="f">ゴール<small>何が変わったら「進んだ」と言える？「全部見る」「全部読む」は書きません</small></label>
+  <input type="text" id="goal" placeholder="例）プロフィールを整えて、投稿を1本出す">
+
+  <label class="f">STEP 1<small>5〜15分で終わる大きさに</small></label>
+  <input type="text" id="s1" placeholder="例）「プロフィールの作り方」を見て、自己紹介を3行で書く">
+  <label class="f">STEP 2</label>
+  <input type="text" id="s2" placeholder="例）その3行を、プロフィール欄に貼る">
+  <label class="f">STEP 3</label>
+  <input type="text" id="s3" placeholder="例）「最初の投稿」を見て、1本投稿する">
+  <button class="btn small ghost" id="fillExample">③・④を選んだ方：例を入れる</button>
+
+  <label class="f">はじめる日時<small>日付と時間まで。「コーヒーを淹れたあと」など、いつもの行動のあとにくっつけると始めやすい</small></label>
+  <input type="text" id="when" placeholder="例）木曜の夜、子どもが寝たあと15分">
+
+  <label class="f">わからないことの行き先<small>メモ → 調べる → 聞く先</small></label>
+  <input type="text" id="where" placeholder="例）メモ → 調べる → 著者の質問窓口">
+
+  <button class="btn" data-next data-require="goal,s1">次へ（タイプの工夫）</button>
+  <button class="back" data-prev>もどる</button>
+</section>
+
+<!-- 6 タイプの工夫 -->
+<section class="card hidden" data-step="6">
+  <span class="step-no">第5章</span>
+  <h2>タイプの工夫を、1行足す</h2>
+  <p class="lead">エニアグラムのタイプがわかっていれば、選んでください。行動の後に「根っこにある欲求」が満たされるように組むと、それがいちばん効く「いい変化」になります。</p>
+  <div class="types" id="types">
+    <button data-t="1">1</button><button data-t="2">2</button><button data-t="3">3</button><button data-t="4">4</button><button data-t="5">5</button>
+    <button data-t="6">6</button><button data-t="7">7</button><button data-t="8">8</button><button data-t="9">9</button>
+    <button data-t="all" class="wide">わからない・9つ全部から選びたい</button>
+  </div>
+  <div id="typeOut"></div>
+  <p class="done-msg">タイプの候補は、<a href="https://satchan-cocoro.github.io/enneagram-shindan/brain/" target="_blank" rel="noopener">タイプ絞り込みシート</a>でも出せます。</p>
+  <label class="f">私のタイプの工夫<small>「いつ、何をするか」がわかる1行に。空欄でもOK</small></label>
+  <textarea id="tip" placeholder="例）10分で1つ試して、○をつける。終わったら、好きな曲を1曲聴く。"></textarea>
+  <button class="btn" data-next>ステップ表を完成させる</button>
+  <button class="back" data-prev>もどる</button>
+</section>
+
+<!-- 7 完成 -->
+<section class="hidden" data-step="7">
+  <div class="sheet" id="sheet"></div>
+  <button class="btn" id="copyBtn">テキストでコピーする</button>
+  <p class="done-msg" style="text-align:center;margin-top:8px">メモ帳やワークシートに貼っておくか、この画面をスクリーンショットで保存してください。</p>
+  <div class="card">
+    <h2>今週は、STEP1のことだけ</h2>
+    <p class="lead" style="margin:0">STEP2とSTEP3は、まだ見なくていいです。<br><br>
+    1週間後にもう一度このページを開いて、STEP1に○がついていなければ、4つの問いに戻って×のところを1つ変えればOK。<br>
+    <b>変えるのは、あなたではなく仕組みのほうです。</b></p>
+  </div>
+  <div class="card">
+    <h2>できたら、教えてください</h2>
+    <p class="lead">公式LINEのトークに「できた」と送ってもらえたら、とてもうれしいです。</p>
+    <a class="btn" style="text-align:center;text-decoration:none" href="https://lin.ee/yxYXouv" target="_blank" rel="noopener">公式LINEをひらく</a>
+  </div>
+  <button class="btn ghost" data-goto="5">ステップ表を直す</button>
+  <button class="btn ghost" id="resetBtn">別の積ん読で、最初からつくる</button>
+</section>
+
+<footer>
+  Brain『買った瞬間が、いちばん幸せだった｜積ん読を解消しよう』<br>
+  公認心理師 さっちゃん｜<a href="https://lin.ee/yxYXouv" target="_blank" rel="noopener">公式LINE</a>
+</footer>
+</div>
+<div class="toast" id="toast">コピーしました</div>
+
+<script>
+(function(){
+  var KEY='satchan-step-maker-v1';
+  var TYPES={
+    1:{name:'きちんとやりたい',want:'正しくありたい',tip:'「ここまでできたら完了」を書く。今回しないところには、先に印をつけておく。',ex:'自己紹介を3行書けたら、今日は完了。言葉の細かな修正は次回にする。'},
+    2:{name:'誰かの役に立ちたい',want:'必要とされたい',tip:'「誰の、どんな場面に役立てたいか」と、自分の学ぶ時間を書く。',ex:'家族との会話に使いたい一言を探す。日曜の15分を、自分の読む時間として予定に入れる。'},
+    3:{name:'結果を出したい',want:'価値ある自分でいたい',tip:'○の横に「今日、自分ができたこと」を一言書く。成果の数字は、決めた日にまとめて見る。',ex:'○の横に、今日できたことを一言書く。成果の数字は、決めた日にまとめて見直す。'},
+    4:{name:'自分らしくありたい',want:'自分らしくありたい',tip:'ゴールを、自分が使いたい場面の言葉に置き換える。',ex:'ゴールを「私が実際に使いたい場面」の言葉で書き直す。'},
+    5:{name:'わかっていたい',want:'有能でありたい',tip:'読む範囲と、小さく試すことをセットにする。',ex:'2ページ読んだら、自分の例を一つ書く。新しく出た疑問は、次に調べるメモへ。'},
+    6:{name:'安心していたい',want:'支えと安心がほしい',tip:'「何がわからなくなったら、どこで確かめるか」を書く。',ex:'わからない箇所を一つメモし、説明ページか質問窓口で確認する。解決したら、止まったステップへ戻る。'},
+    7:{name:'楽しくいたい',want:'満たされていたい',tip:'ステップを短くして、終えたあとの小さな楽しみを決める。',ex:'10分で一つ試して、○をつける。終わったら、好きな曲を一曲聴いて休む。'},
+    8:{name:'自分の力でやりたい',want:'自分の道は、自分で決めたい',tip:'自分で試す範囲と、人に聞く範囲を書く。',ex:'一度試して解決しなければ、詰まった操作だけ質問する。進め方は、答えを聞いて自分で選ぶ。'},
+    9:{name:'穏やかでいたい',want:'心の平和を保ちたい',tip:'いつもの行動のあとに短い時間を置き、「今日はどこで終えるか」も決める。',ex:'木曜の朝、コーヒーのあとに5分。選んだページを読んだら、今日は終える。'}
+  };
+  var CHOICE={1:'① ステップに分けて進める',2:'② 必要なところだけ進める',3:'③ いったん止めて、見直す日を決める',4:'④ 手放す'};
+  var FIELDS=['item','itemNote','instead','c2use','c2skip','c3check','c3date','c4how','goal','s1','s2','s3','when','where','tip'];
+  var S={step:0,q:{},choice:null,type:null,f:{}};
+  var LAST=7;
+  var $=function(id){return document.getElementById(id)};
+  var secs=[].slice.call(document.querySelectorAll('[data-step]'));
+
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+  function load(){try{var r=localStorage.getItem(KEY);return r?JSON.parse(r):null}catch(e){return null}}
+  function readFields(){FIELDS.forEach(function(k){var el=$(k);if(el)S.f[k]=el.value.trim()})}
+  function writeFields(){FIELDS.forEach(function(k){var el=$(k);if(el&&S.f[k]!=null)el.value=S.f[k]})}
+
+  function show(n){
+    readFields();
+    S.step=n; save();
+    secs.forEach(function(s){s.classList.toggle('hidden',+s.dataset.step!==n)});
+    document.body.classList.toggle('compact',n>0);
+    $('prog').classList.toggle('hidden',n===0||n===LAST);
+    var p=Math.min(n,6); $('progText').textContent=p+' / 6'; $('progBar').style.width=(p/6*100)+'%';
+    if(n===3) renderX();
+    if(n===5) renderTips();
+    if(n===6) renderType();
+    if(n===LAST) renderSheet();
+    window.scrollTo(0,0);
+  }
+
+  // 次へ・もどる
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('button,[data-choice]'); if(!b) return;
+    if(b.hasAttribute('data-next')){
+      readFields();
+      var req=b.dataset.require, rq=b.dataset.requireq;
+      if(req){var miss=req.split(',').filter(function(k){return !S.f[k]}); if(miss.length){toast(miss[0]==='item'?'積ん読の名前を入れてください':miss[0]==='goal'?'ゴールを入れてください':'STEP1を入れてください');$(miss[0]).focus();return}}
+      if(rq){var m2=rq.split(',').filter(function(k){return !S.q[k]}); if(m2.length){toast('4つの問いに、全部答えてください');return}}
+      if(b.hasAttribute('data-requirechoice')&&!S.choice){toast('どれか1つ選んでください');return}
+      show(S.step+1);
+    }
+    else if(b.hasAttribute('data-prev')) show(S.step-1);
+    else if(b.dataset.goto) show(+b.dataset.goto);
+  });
+
+  // ○×
+  [].forEach.call(document.querySelectorAll('.ox'),function(g){
+    g.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b) return;
+      S.q[g.dataset.q]=b.dataset.v; paintOX(); save();
+    });
+  });
+  function paintOX(){
+    [].forEach.call(document.querySelectorAll('.ox'),function(g){
+      [].forEach.call(g.children,function(b){b.classList.toggle('on',S.q[g.dataset.q]===b.dataset.v)});
+    });
+    $('madaHint').classList.toggle('hidden',S.q.q1!=='m');
+  }
+
+  // 4択
+  [].forEach.call(document.querySelectorAll('[data-choice]'),function(o){
+    o.addEventListener('click',function(e){
+      if(e.target.closest('input')) return;
+      S.choice=+o.dataset.choice; paintChoice(); save();
+    });
+  });
+  function paintChoice(){
+    [].forEach.call(document.querySelectorAll('[data-choice]'),function(o){
+      var on=+o.dataset.choice===S.choice; o.classList.toggle('on',on);
+      var sf=o.querySelector('.sub-fields'); if(sf) sf.classList.toggle('hidden',!on);
+    });
+  }
+
+  var QTEXT={q1:'やった後の変化',q2:'1回の大きさ',q3:'「進んだ」の目安',q4:'わからないときの行き先'};
+  function renderX(){
+    var xs=['q1','q2','q3','q4'].filter(function(k){return S.q[k]==='x'||(k==='q1'&&S.q[k]==='m')});
+    $('xLead').innerHTML = xs.length
+      ? '×がついたところが、これから手を打つ場所です。'+(xs.length===4?'<br>4つとも×でも、ぜんぜん問題ありません。変えられる場所が4つある、ということです。':'')
+      : '4つとも○でした。それでも止まっているなら、「はじめる日時」や「タイプの工夫」がヒントになるかもしれません。';
+    $('xList').innerHTML=['q1','q2','q3','q4'].map(function(k){
+      var v=S.q[k], mark=v==='o'?'○':v==='m'?'まだ':'×';
+      return '<li class="'+(v==='o'?'':'x')+'">'+mark+'　'+QTEXT[k]+'</li>';
+    }).join('');
+    var ins=$('instead').value.trim(), h=$('insteadHint');
+    if(ins){h.innerHTML='手が止まっていたあいだの「<b>'+esc(ins)+'</b>」。<br>そちらには、「気持ちがラクになる」のような<b>いい変化</b>が起きていたのかもしれません。だから、そっちが続いた。<b>意志が弱いからではありません。</b>';h.classList.remove('hidden')}
+    else h.classList.add('hidden');
+  }
+
+  function renderTips(){
+    var t=[];
+    if(S.q.q3==='x') t.push('<b>「進んだ」の目安</b>が×でした。ゴールには「何ができるようになったら」を書きます。');
+    if(S.q.q2==='x'||S.q.q1==='m') t.push('<b>1回の大きさ</b>を小さくします。STEP1は、5〜15分で終わるものに。');
+    if(S.q.q1==='x') t.push('<b>やった後の変化</b>が×でした。終わったら○をつけるだけでも、「前と後の変化」になります。');
+    if(S.q.q4==='x') t.push('<b>わからないときの行き先</b>が×でした。下の「行き先」を、先に決めておきましょう。');
+    if(S.choice===2) t.push('②を選んだので、STEPは「使うところ」だけで組みます。');
+    if(S.choice===3||S.choice===4) t.push('③・④を選んだ方は、「例を入れる」ボタンで、ステップの例を入れられます。');
+    $('xTips').innerHTML=t.length?'<div class="hint">'+t.join('<br>')+'</div>':'';
+    $('fillExample').classList.toggle('hidden',!(S.choice===3||S.choice===4));
+  }
+  $('fillExample').addEventListener('click',function(){
+    var ex = S.choice===3
+      ? {goal:'続けるか、やめるかを決める',s1:'更新日と、解約・休止の条件を調べる',s2:'カレンダーに見直す日を書く',s3:'その日に、4つの問いにもう一度答える'}
+      : {goal:'手放し終わる',s1:'解約・売却・譲る方法を調べる',s2:'手続きをする、または手放す',s3:'○をつけて、おしまいにする'};
+    Object.keys(ex).forEach(function(k){ if(!$(k).value.trim()) $(k).value=ex[k]; });
+    readFields(); save(); toast('例を入れました。自分の言葉に直してOKです');
+  });
+
+  function renderType(){
+    [].forEach.call($('types').children,function(b){b.classList.toggle('on',String(S.type)===b.dataset.t)});
+    var out=$('typeOut');
+    if(!S.type){out.innerHTML='';return}
+    var list = S.type==='all'||S.type==='0' ? [1,2,3,4,5,6,7,8,9] : [+S.type];
+    out.innerHTML=(list.length>1?'<p class="lead" style="margin-top:12px">9つを読んで、「これならできそう」を1つ選んでください。それが、あなたの工夫です。</p>':'')+
+      list.map(function(n){var d=TYPES[n];return '<div class="typebox"><b>タイプ'+n+'　'+d.name+'</b>根っこにある欲求：'+d.want+'<br>足す工夫：'+d.tip+'<br><button class="btn small" data-use="'+n+'">この工夫を使う</button></div>'}).join('')+
+      (list.length===1?'<p class="lead">タイプは入口です。合わなければ、ほかのタイプの工夫を試してもOK。</p>':'');
+  }
+  $('types').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    S.type=b.dataset.t; save(); renderType();
+  });
+  $('typeOut').addEventListener('click',function(e){
+    var b=e.target.closest('[data-use]'); if(!b) return;
+    $('tip').value=TYPES[b.dataset.use].ex; readFields(); save(); toast('入れました。自分の場面に合わせて直してOKです');
+    $('tip').focus();
+  });
+
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function rows(){
+    var f=S.f, r=[];
+    r.push(['私の積ん読', f.item+(f.itemNote?'（'+f.itemNote+'）':'')]);
+    r.push(['次の行動', CHOICE[S.choice]||'']);
+    if(S.choice===2){ if(f.c2use) r.push(['使うところ',f.c2use]); if(f.c2skip) r.push(['使わないところ',f.c2skip+'　×']); }
+    if(S.choice===3){ if(f.c3check) r.push(['確認したこと',f.c3check]); if(f.c3date) r.push(['見直す日',f.c3date]); }
+    if(S.choice===4){ if(f.c4how) r.push(['手放し方',f.c4how]); }
+    r.push(['ゴール', f.goal]);
+    ['s1','s2','s3'].forEach(function(k,i){ if(f[k]) r.push(['STEP'+(i+1), f[k], 's']); });
+    r.push(['はじめる日時', f.when||'']);
+    r.push(['わからないことの行き先', f.where||'']);
+    r.push(['私のタイプの工夫', f.tip||'']);
+    return r;
+  }
+  function renderSheet(){
+    $('sheet').innerHTML='<h2>私のステップ表</h2>'+rows().map(function(x){
+      return '<div class="row'+(x[2]?' s':'')+'"><div class="k">'+esc(x[0])+'</div><div class="v">'+esc(x[1]||'―')+(x[2]?'<span class="c"></span>':'')+'</div></div>';
+    }).join('');
+  }
+  $('copyBtn').addEventListener('click',function(){
+    var txt='【私のステップ表】\n'+rows().map(function(x){return x[0]+'：'+(x[1]||'')+(x[2]?'　○':'')}).join('\n');
+    var done=function(){toast('コピーしました')};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,function(){fallback(txt)})} else fallback(txt);
+  });
+  function fallback(t){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');toast('コピーしました')}catch(e){prompt('こちらをコピーしてください',t)}document.body.removeChild(a)}
+  $('resetBtn').addEventListener('click',function(){
+    if(!confirm('入力した内容を消して、最初からつくりますか？')) return;
+    S={step:0,q:{},choice:null,type:null,f:{}}; FIELDS.forEach(function(k){if($(k))$(k).value=''});
+    save(); paintOX(); paintChoice(); show(0);
+  });
+  function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show')},1800)}
+
+  // 保存しながら入力
+  FIELDS.forEach(function(k){var el=$(k); if(el) el.addEventListener('input',function(){readFields();save()})});
+
+  // 再開
+  var prev=load();
+  if(prev&&prev.step>0){
+    $('resumeBtn').classList.remove('hidden');
+    $('resumeBtn').addEventListener('click',function(){S=prev; if(!S.f)S.f={}; writeFields(); paintOX(); paintChoice(); show(S.step)});
+  }
+})();
+</script>
+</body>
+</html>
