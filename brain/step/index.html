@@ -82,6 +82,10 @@ footer{text-align:center;font-size:12px;color:var(--ink3);margin-top:30px;line-h
 footer a{color:var(--green)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:99px;padding:10px 18px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 2px}
+.chips .cat{width:100%;font-size:12px;font-weight:700;color:var(--green);margin-top:6px}
+.chips button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px;font-family:var(--body);font-size:13px;color:var(--ink);cursor:pointer}
+.chips button:active{background:var(--orange-soft)}
 </style>
 </head>
 <body>
@@ -205,6 +209,28 @@ footer a{color:var(--green)}
   <input type="text" id="s3" placeholder="例）「最初の投稿」を見て、1本投稿する">
   <button class="btn small ghost" id="fillExample">③・④を選んだ方：例を入れる</button>
 
+  <label class="f">ごほうび（すぐ）<small>STEPが終わったら、すぐ。毎回もらえるもの</small></label>
+  <input type="text" id="rewardNow" placeholder="例）○をつけて、好きな曲を1曲聴く">
+  <label class="f">ごほうび（あとで）<small>あとで渡すなら「いつ・どこで・何を」まで</small></label>
+  <input type="text" id="rewardLater" placeholder="例）STEP1が終わったら、土曜の朝にスタバに寄る">
+  <div class="hint">
+    <b>ごほうびは、たくさん用意するほど効きます。</b>「すぐ」と「あとで」を両方置くのがおすすめ。<br>
+    下の例をタップすると、入れられます（すぐ→あとで の順に入ります）。<br>
+    新しく講座や教材を買うごほうびは、おすすめしません。
+    <div class="chips" id="rewardChips">
+      <span class="cat">もの</span>
+      <button>いつものコンビニコーヒーを、スタバにする</button><button>好きなアロマをたきながら、お風呂に入る</button><button>ちょっといいお茶をいれる</button>
+      <span class="cat">情報（進んだのが見える）</span>
+      <button>ステップ表に○をつける</button><button>カレンダーに色を塗る</button><button>「◯日連続」を数える</button>
+      <span class="cat">人から</span>
+      <button>「できたよ！」をSNSに出す</button><button>コミュニティで報告して、反応をもらう</button><button>家族に言って「えらいじゃん」をもらう</button>
+      <span class="cat">好きなこと</span>
+      <button>好きなドラマを1話見る</button><button>好きな曲を1曲聴く</button>
+      <span class="cat">自分に許すこと</span>
+      <button>今夜の家事を1つ休む</button><button>週末の予定を、先に自分が決める</button>
+    </div>
+  </div>
+
   <label class="f">はじめる日時<small>日付と時間まで。「コーヒーを淹れたあと」など、いつもの行動のあとにくっつけると始めやすい</small></label>
   <input type="text" id="when" placeholder="例）木曜の夜、子どもが寝たあと15分">
 
@@ -275,7 +301,7 @@ footer a{color:var(--green)}
     9:{name:'穏やかでいたい',want:'心の平和を保ちたい',tip:'いつもの行動のあとに短い時間を置き、「今日はどこで終えるか」も決める。',ex:'木曜の朝、コーヒーのあとに5分。選んだページを読んだら、今日は終える。'}
   };
   var CHOICE={1:'① ステップに分けて進める',2:'② 必要なところだけ進める',3:'③ いったん止めて、見直す日を決める',4:'④ 手放す'};
-  var FIELDS=['item','itemNote','instead','c2use','c2skip','c3check','c3date','c4how','goal','s1','s2','s3','when','where','tip'];
+  var FIELDS=['item','itemNote','instead','c2use','c2skip','c3check','c3date','c4how','goal','s1','s2','s3','rewardNow','rewardLater','when','where','tip'];
   var S={step:0,q:{},choice:null,type:null,f:{}};
   var LAST=7;
   var $=function(id){return document.getElementById(id)};
@@ -362,13 +388,20 @@ footer a{color:var(--green)}
     var t=[];
     if(S.q.q3==='x') t.push('<b>「進んだ」の目安</b>が×でした。ゴールには「何ができるようになったら」を書きます。');
     if(S.q.q2==='x'||S.q.q1==='m') t.push('<b>1回の大きさ</b>を小さくします。STEP1は、5〜15分で終わるものに。');
-    if(S.q.q1==='x') t.push('<b>やった後の変化</b>が×でした。終わったら○をつけるだけでも、「前と後の変化」になります。');
+    if(S.q.q1==='x') t.push('<b>やった後の変化</b>が×でした。終わったら○をつける＋下の「ごほうび」を置くと、「前と後の変化」がはっきりします。');
     if(S.q.q4==='x') t.push('<b>わからないときの行き先</b>が×でした。下の「行き先」を、先に決めておきましょう。');
     if(S.choice===2) t.push('②を選んだので、STEPは「使うところ」だけで組みます。');
     if(S.choice===3||S.choice===4) t.push('③・④を選んだ方は、「例を入れる」ボタンで、ステップの例を入れられます。');
     $('xTips').innerHTML=t.length?'<div class="hint">'+t.join('<br>')+'</div>':'';
     $('fillExample').classList.toggle('hidden',!(S.choice===3||S.choice===4));
   }
+  $('rewardChips').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    var now=$('rewardNow'), later=$('rewardLater'), v=b.textContent;
+    var add=function(el){el.value = el.value.trim() ? el.value.trim()+'／'+v : v;};
+    if(!now.value.trim()) add(now); else if(!later.value.trim()) add(later); else add(now);
+    readFields(); save(); toast('入れました。自分の言葉に直してOKです');
+  });
   $('fillExample').addEventListener('click',function(){
     var ex = S.choice===3
       ? {goal:'続けるか、やめるかを決める',s1:'更新日と、解約・休止の条件を調べる',s2:'カレンダーに見直す日を書く',s3:'その日に、4つの問いにもう一度答える'}
@@ -406,6 +439,8 @@ footer a{color:var(--green)}
     if(S.choice===4){ if(f.c4how) r.push(['手放し方',f.c4how]); }
     r.push(['ゴール', f.goal]);
     ['s1','s2','s3'].forEach(function(k,i){ if(f[k]) r.push(['STEP'+(i+1), f[k], 's']); });
+    r.push(['ごほうび（すぐ）', f.rewardNow||'']);
+    r.push(['ごほうび（あとで）', f.rewardLater||'']);
     r.push(['はじめる日時', f.when||'']);
     r.push(['わからないことの行き先', f.where||'']);
     r.push(['私のタイプの工夫', f.tip||'']);
